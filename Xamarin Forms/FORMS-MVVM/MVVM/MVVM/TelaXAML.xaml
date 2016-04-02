@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MVVM.TelaXAML">
+  
+  <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+    
+    <Label Text="{Binding Nome}" />
+    <Label Text="{Binding Idade}" />
+
+    <Button Text="Aumentar Idade"
+        Command="{Binding AumentarIdade}"
+        CommandParameter="2" />
+    
+    <Button Text="Reduzir 1 Idade"
+        Command="{Binding ReduzirIdade}" />
+    
+    <Button Text="Alterar Nome"
+        Clicked="OnAlteraNome" />
+
+  </StackLayout>
+
+</ContentPage>
