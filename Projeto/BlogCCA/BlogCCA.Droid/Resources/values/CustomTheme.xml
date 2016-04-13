@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <style name="CustomTheme" parent="@android:Theme.Holo">
+    <item name="android:actionBarSize">0.1px</item>
+  </style>
+</resources>
