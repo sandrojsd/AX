@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InstaXamarinMobile.App">
+  <Application.Resources>
+
+    <ResourceDictionary>
+
+      <Style TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="White" />
+      </Style>
+
+      <Style TargetType="StackLayout">
+        <Setter Property="BackgroundColor" Value="White" />
+      </Style>
+
+
+      <Style x:Key="Loading" TargetType="StackLayout">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="Opacity" Value="0.8" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+      </Style>
+
+
+      <Style TargetType="Button">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="BackgroundColor" Value="Yellow" />
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="WidthRequest" Value="200" />
+      </Style>
+
+
+      <Style x:Key="Importante" TargetType="Button">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="BackgroundColor" Value="Red" />
+        <Setter Property="TextColor" Value="Yellow" />
+        <Setter Property="WidthRequest" Value="200" />
+      </Style>
+
+
+      <Style TargetType="Label" >
+        <Setter Property="TextColor" Value="#848484" />
+        <Setter Property="FontSize" Value="12"/>
+      </Style>
+      
+      <Style x:Key="Titulo" TargetType="Label" >
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+      </Style>
+
+      <Style x:Key="Titulo2" TargetType="Label" >
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+      </Style>
+
+      <Style x:Key="Titulo3" TargetType="Label" >
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+      </Style>
+
+
+    </ResourceDictionary>
+
+  </Application.Resources>
+</Application>
