@@ -11,7 +11,7 @@ namespace BlogCCA
     {
         public static async Task<List<Categoria>> ListaCategorias()
         {
-            var client = new RestClient("https://comocriaraplicativos.com.br/");
+            var client = new RestClient("http://comocriaraplicativos.com.br/");
 
             var request = new RestRequest("?json={Funcao}", Method.GET);
             request.AddUrlSegment("Funcao", "get_category_index");
@@ -26,7 +26,7 @@ namespace BlogCCA
 
         public static async Task<List<Post>> ListaPosts(String pesquisa, int Quantidade, int Pagina)
         {
-            var client = new RestClient("https://comocriaraplicativos.com.br/");
+            var client = new RestClient("http://comocriaraplicativos.com.br/");
 
             RestRequest request = new RestRequest("?json={Funcao}&s={Pesquisa}&count={Quantos}&page={Pagina}", Method.GET);
             if(String.IsNullOrEmpty(pesquisa))
@@ -48,7 +48,7 @@ namespace BlogCCA
 
         public static async Task<List<Post>> ListaPostsPorCategoria(int IdCategoria, int Quantidade, int Pagina)
         {
-            var client = new RestClient("https://comocriaraplicativos.com.br/");
+            var client = new RestClient("http://comocriaraplicativos.com.br/");
 
             var request = new RestRequest("?json={Funcao}&id={IDCategoria}&count={Quantos}&page={Pagina}", Method.GET);
             request.AddUrlSegment("Funcao", "get_category_posts");
