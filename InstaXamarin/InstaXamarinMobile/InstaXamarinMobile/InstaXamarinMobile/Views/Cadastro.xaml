@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:InstaXamarinMobile"
+             x:Class="InstaXamarinMobile.Views.Cadastro">
+  <ContentPage.Content>
+
+    <Grid>
+
+      <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+        <StackLayout Padding="20">
+
+          <Label Text="Cadastro de novo usuário" Style="{StaticResource Titulo3}" HorizontalOptions="CenterAndExpand"></Label>
+
+          <StackLayout HeightRequest="10" />
+
+          <Entry x:Name="txtNome" Text="{Binding CADASTRO.Nome}"  Keyboard="Text" Placeholder="Nome"></Entry>
+          <Entry x:Name="txtEmail" Text="{Binding CADASTRO.Email}" Keyboard="Email" Placeholder="E-mail"></Entry>
+          <Entry x:Name="txtSenha" Text="{Binding CADASTRO.Senha}" Keyboard="Default" Placeholder="Senha" IsPassword="True"></Entry>
+
+          <Button Text="Cadastrar" x:Name="btnCadastro" Clicked="Cadastrar"></Button>
+
+          <StackLayout HeightRequest="10" />
+
+          <Button Text="Voltar para o Login" x:Name="btnVoltar" Clicked="Voltar"  Style="{StaticResource Importante}"></Button>
+
+        </StackLayout>
+
+      </ScrollView>
+
+      <local:LOADING x:Name="LOAD" />
+
+    </Grid>
+  </ContentPage.Content>
+</ContentPage>

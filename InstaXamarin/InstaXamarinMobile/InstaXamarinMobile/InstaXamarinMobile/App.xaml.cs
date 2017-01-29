@@ -6,6 +6,7 @@ using System.Text;
 using Xamarin.Forms;
 using XLabs.Platform.Device;
 using XLabs.Ioc;
+using InstaXamarinMobile.Models;
 
 namespace InstaXamarinMobile
 {
@@ -13,24 +14,24 @@ namespace InstaXamarinMobile
     {
         #region Preferences Data
 
-        public const string URL = "http://000.000.000.000:4000";
+        public const string URL = "http://10.0.1.11:4000/";
 
         public static App Current;
 
-        //public string PushToken
-        //{
-        //    get { return App.PreferenceGet<String>("PushToken"); }
-        //    set { App.PreferenceAdd("PushToken", value); }
-        //}
-        //public static Usuario UsuarioLogado
-        //{
-        //    get { return App.PreferenceGet<Usuario>("UsuarioLogado"); }
-        //    set { App.PreferenceAdd("UsuarioLogado", value); }
-        //}
-        //public static bool Logado
-        //{
-        //    get { return UsuarioLogado != null; }
-        //}
+        public string PushToken
+        {
+            get { return App.PreferenceGet<String>("PushToken"); }
+            set { App.PreferenceAdd("PushToken", value); }
+        }
+        public static Usuario UsuarioLogado
+        {
+            get { return App.PreferenceGet<Usuario>("UsuarioLogado"); }
+            set { App.PreferenceAdd("UsuarioLogado", value); }
+        }
+        public static bool Logado
+        {
+            get { return UsuarioLogado != null; }
+        }
 
         public static int LarguraTela
         {
@@ -55,14 +56,15 @@ namespace InstaXamarinMobile
             LarguraTela = Resolver.Resolve<IDevice>().Display.Width;
             AlturaTela = Resolver.Resolve<IDevice>().Display.Height;
 
-            //if (Logado)
-            //    MainPage = new Views.Home();
-            //else
-            //    MainPage = new Views.Login();
+            if (Logado)
+                MainPage = new Views.Home();
+            else
+                MainPage = new Views.Login();
 
-            //MessagingCenter.Subscribe<object>(this, "Logado", (sender) => {
-            //    MainPage = new Views.Home();
-            //});
+            MessagingCenter.Subscribe<object>(this, "Logado", (sender) =>
+            {
+                MainPage = new Views.Home();
+            });
 
             //MessagingCenter.Subscribe<object>(this, "Logoff", async (sender) => {
             //    using (APIHelper API = new APIHelper())

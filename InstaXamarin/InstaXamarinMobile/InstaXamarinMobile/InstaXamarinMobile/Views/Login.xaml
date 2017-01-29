@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:InstaXamarinMobile"
+             x:Class="InstaXamarinMobile.Views.Login">
+  <ContentPage.Content>
+
+    <Grid>
+
+      <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+        <StackLayout Padding="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+          
+          <Image Source="Logo.png"></Image>
+
+          <Label Text="Seja bem vindo ao InstaXamarin" Style="{StaticResource Titulo}" HorizontalOptions="CenterAndExpand" />
+          <Label Text="App desenvolvido no treinamento" HorizontalOptions="CenterAndExpand"  />
+          <Label Text="Academia Xamarin" HorizontalOptions="CenterAndExpand" Style="{StaticResource Titulo}" />
+
+          <StackLayout HeightRequest="10" />
+
+          <Entry x:Name="txtEmail" Text="{Binding USUARIO.Email}" Keyboard="Email" Placeholder="Email"></Entry>
+
+          <Entry x:Name="txtSenha" Text="{Binding USUARIO.Senha}" IsPassword="true" Placeholder="Senha"></Entry>
+
+          <Button Text="Entrar" x:Name="btnEntrar"></Button>
+
+          <StackLayout HeightRequest="10" />
+
+          <Button Text="Cadastrar" x:Name="btnNovoUsuario" Style="{StaticResource Importante}"></Button>
+        </StackLayout>
+
+      </ScrollView>
+
+      <local:LOADING x:Name="LOAD" />
+
+    </Grid>
+
+  </ContentPage.Content>
+</ContentPage>

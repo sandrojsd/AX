@@ -28,8 +28,16 @@ namespace InstaXamarinMobile.iOS
             resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice);
             Resolver.SetResolver(resolverContainer.GetResolver());
 
+            Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
+
             global::Xamarin.Forms.Forms.Init();
+
+            FormsPlugin.Iconize.iOS.IconControls.Init();
+
             LoadApplication(new App());
+
+            //LoadApplication(UXDivers.Gorilla.iOS.Player.CreateApplication(
+            //    new UXDivers.Gorilla.Config("Gorilla on WelitonDesktop")));
 
             return base.FinishedLaunching(app, options);
         }

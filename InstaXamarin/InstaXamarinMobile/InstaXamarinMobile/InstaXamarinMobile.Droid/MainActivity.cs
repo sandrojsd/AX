@@ -26,7 +26,15 @@ namespace InstaXamarinMobile.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            FormsPlugin.Iconize.Droid.IconControls.Init(Resource.Id.toolbar, Resource.Id.sliding_tabs);
+
             LoadApplication(new App());
+
+            //LoadApplication(UXDivers.Gorilla.Droid.Player.CreateApplication(
+            //   ApplicationContext,
+            //   new UXDivers.Gorilla.Config("Gorilla on WelitonDesktop")));
+
         }
     }
 }

@@ -92,7 +92,9 @@
     <Compile Include="AppDelegate.cs" />
     <None Include="app.config" />
     <None Include="Entitlements.plist" />
-    <None Include="Info.plist" />
+    <None Include="Info.plist">
+      <SubType>Designer</SubType>
+    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork@2x" />
@@ -117,13 +119,73 @@
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="EngineIoClientDotNet, Version=0.9.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EngineIoClientDotNet.0.9.22\lib\xamarinios10\EngineIoClientDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ExifLib, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ExifLib.PCL.1.0.1\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FormsPlugin.Iconize, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.FormsPlugin.Iconize.1.0.10\lib\Xamarin.iOS10\FormsPlugin.Iconize.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FormsPlugin.Iconize.iOS, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.FormsPlugin.Iconize.1.0.10\lib\Xamarin.iOS10\FormsPlugin.Iconize.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Iconize, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Iconize.1.0.10\lib\Xamarin.iOS10\Plugin.Iconize.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Iconize.FontAwesome.iOS, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Iconize.FontAwesome.1.0.10\lib\Xamarin.iOS10\Plugin.Iconize.FontAwesome.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Iconize.iOS, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Iconize.1.0.10\lib\Xamarin.iOS10\Plugin.Iconize.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SocketIoClientDotNet, Version=0.9.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SocketIoClientDotNet.0.9.13\lib\xamarinios10\SocketIoClientDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\Xamarin.iOS10\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\Xamarin.iOS10\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
+    <Reference Include="UXDivers.Gorilla.Common, Version=0.9.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\UXDivers.GorillaPlayer.Common.0.9.1.2\lib\Xamarin.iOS10\UXDivers.Gorilla.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UXDivers.Gorilla.Common.iOS, Version=0.9.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\UXDivers.GorillaPlayer.Common.0.9.1.2\lib\Xamarin.iOS10\UXDivers.Gorilla.Common.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UXDivers.Gorilla.SDK, Version=0.9.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\UXDivers.GorillaPlayer.SDK.0.9.1.2\lib\Xamarin.iOS10\UXDivers.Gorilla.SDK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UXDivers.Gorilla.SDK.iOS, Version=0.9.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\UXDivers.GorillaPlayer.SDK.0.9.1.2\lib\Xamarin.iOS10\UXDivers.Gorilla.SDK.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebSocket4Net, Version=0.14.1.0, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WebSocket4Net.0.14.1\lib\Xamarin.iOS10\WebSocket4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.2.3.3.180\lib\Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
       <Private>True</Private>
@@ -176,6 +238,15 @@
       <Name>InstaXamarinMobile</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Logo%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Logo%402x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -183,5 +254,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
 </Project>
