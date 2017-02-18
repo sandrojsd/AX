@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:InstaXamarinMobile"
+             x:Class="InstaXamarinMobile.Views.Postagem">
+  <Grid>
+
+    <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+      <StackLayout Padding="40">
+
+        <Frame OutlineColor="Red">
+          <Image x:Name="imgPostar" Source="{Binding Imagem}" VerticalOptions="CenterAndExpand" />
+        </Frame>
+
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Button Command="{Binding TiraFotoCommand}" Text="Câmera" Grid.Column="0" Style="{StaticResource Pequeno}" />
+          <Button Command="{Binding BuscaFotoCommand}" Text="Biblioteca" Grid.Column="1" Style="{StaticResource Pequeno}" />
+        </Grid>
+
+        <Editor x:Name="txtDescricao" Keyboard="Text" HeightRequest="100" TextColor="Black" BackgroundColor="#FFFFCC" Text="{Binding POST.Descricao}"></Editor>
+
+        <Button x:Name="btnPostar" Text="Postar" Style="{StaticResource Importante}"></Button>
+
+      </StackLayout>
+
+    </ScrollView>
+
+    <local:LOADING x:Name="LOAD" />
+
+  </Grid>
+
+</ContentPage>

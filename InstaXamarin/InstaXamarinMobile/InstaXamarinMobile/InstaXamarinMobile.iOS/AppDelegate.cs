@@ -6,6 +6,7 @@ using Foundation;
 using UIKit;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
+using XLabs.Platform.Services.Geolocation;
 
 namespace InstaXamarinMobile.iOS
 {
@@ -25,7 +26,11 @@ namespace InstaXamarinMobile.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             var resolverContainer = new SimpleContainer();
-            resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice);
+
+            resolverContainer
+               .Register<IDevice>(t => AppleDevice.CurrentDevice)
+               .Register<IGeolocator>(t => new Geolocator());
+
             Resolver.SetResolver(resolverContainer.GetResolver());
 
             Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());

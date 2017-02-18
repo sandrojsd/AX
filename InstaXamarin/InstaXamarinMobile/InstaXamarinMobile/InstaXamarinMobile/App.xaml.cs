@@ -14,7 +14,7 @@ namespace InstaXamarinMobile
     {
         #region Preferences Data
 
-        public const string URL = "http://10.0.1.11:4000/";
+        public const string URL = "http://10.10.10.10:4000/";
 
         public static App Current;
 
@@ -57,13 +57,13 @@ namespace InstaXamarinMobile
             AlturaTela = Resolver.Resolve<IDevice>().Display.Height;
 
             if (Logado)
-                MainPage = new Views.Home();
+                MainPage = new NavigationPage(new Views.Home());
             else
                 MainPage = new Views.Login();
 
             MessagingCenter.Subscribe<object>(this, "Logado", (sender) =>
             {
-                MainPage = new Views.Home();
+                MainPage = new NavigationPage(new Views.Home());
             });
 
             //MessagingCenter.Subscribe<object>(this, "Logoff", async (sender) => {

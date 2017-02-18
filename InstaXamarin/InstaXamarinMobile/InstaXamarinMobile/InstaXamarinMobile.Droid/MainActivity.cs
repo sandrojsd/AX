@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
+using XLabs.Platform.Services.Geolocation;
 
 namespace InstaXamarinMobile.Droid
 {
@@ -20,7 +21,11 @@ namespace InstaXamarinMobile.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             var resolverContainer = new SimpleContainer();
-            resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice);
+
+            resolverContainer
+                .Register<IDevice>(t => AndroidDevice.CurrentDevice)
+                .Register<IGeolocator>(t => new Geolocator());
+
             Resolver.SetResolver(resolverContainer.GetResolver());
 
             base.OnCreate(bundle);

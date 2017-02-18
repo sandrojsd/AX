@@ -17,6 +17,7 @@ namespace InstaXamarinMobile.Models
         public Usuario UsuarioDados { get; set; }
 
         public string FotoURL { get; set; }
+        public byte[] Foto { get; set; }
 
         public string Descricao { get; set; }
 

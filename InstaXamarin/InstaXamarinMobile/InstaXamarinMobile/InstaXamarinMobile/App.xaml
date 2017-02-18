@@ -38,6 +38,15 @@
         <Setter Property="WidthRequest" Value="200" />
       </Style>
 
+      <Style x:Key="Pequeno" TargetType="Button">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="BackgroundColor" Value="#F8F8FF" />
+        <Setter Property="TextColor" Value="Red" />
+        <Setter Property="WidthRequest" Value="200" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="FontSize" Value="10"/>
+      </Style>
 
       <Style TargetType="Label" >
         <Setter Property="TextColor" Value="#848484" />
@@ -62,6 +71,7 @@
         <Setter Property="FontAttributes" Value="Bold"/>
       </Style>
 
+      
 
     </ResourceDictionary>
 

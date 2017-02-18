@@ -1,5 +1,4 @@
-﻿using FormsPlugin.Iconize;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +8,11 @@ using Xamarin.Forms;
 
 namespace InstaXamarinMobile.Views
 {
-    public partial class Home : IconTabbedPage
+    public partial class Perfil : ContentPage
     {
-        public Home()
+        public Perfil()
         {
             InitializeComponent();
-
-            Title = "InstaXamarin";
         }
     }
 }
