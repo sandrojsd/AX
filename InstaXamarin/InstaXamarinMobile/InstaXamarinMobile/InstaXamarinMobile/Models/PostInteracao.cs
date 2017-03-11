@@ -35,5 +35,11 @@ namespace InstaXamarinMobile.Models
         public int QuantidadeDenuncias { get; set; }
         public bool Denunciado { get; set; }
         public bool Bloqueado { get; set; }
+
+        public bool Meu { get; set; }
+        public bool NaoMeu { get { return !Meu; } }
+
+        public bool EuDenunciei { get; set; }
+
     }
 }

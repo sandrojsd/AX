@@ -1,6 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:InstaXamarinMobile;assembly=InstaXamarinMobile"
+             xmlns:local2="clr-namespace:InstaXamarinMobile.Views;assembly=InstaXamarinMobile"
              x:Class="InstaXamarinMobile.Views.Feed">
-  <Label Text="Feed" VerticalOptions="Center" HorizontalOptions="Center" />
+
+    <Grid>
+
+        <ListView x:Name="Posts" ItemsSource="{Binding POSTS}" HasUnevenRows="True" RowHeight="-1" SeparatorColor="Transparent">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <local2:PostParcial BindingContext="{Binding .}" />
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <local:LOADING x:Name="LOAD" />
+
+    </Grid>
+
 </ContentPage>

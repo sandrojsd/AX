@@ -39,5 +39,9 @@ namespace InstaXamarinWeb.Models
 
         [JsonIgnore]
         public DateTime DataCadastro { get; set; }
+
+        [NotMapped]
+        public bool Sigo { get; set; }
+
     }
 }

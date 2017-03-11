@@ -25,13 +25,24 @@ namespace InstaXamarinWeb.API
             List<int> SEGUIDORES = db.Seguidores.Where(ss => ss.SeguidorID == UsuariloLogado).Select(ss => ss.SeguidoID).ToList();
 
             List<Post> POSTS = db.Posts
-                .Where(pp => SEGUIDORES.Contains(pp.UsuarioId) && pp.Bloqueado == false)
+                .Where(pp => (SEGUIDORES.Contains(pp.UsuarioId) || pp.UsuarioId == UsuariloLogado) && pp.Bloqueado == false)
                 .OrderByDescending(pp => pp.Data)
                 .Skip((Pagina - 1) * QuantidadePagina)
                 .Take(QuantidadePagina).ToList();
 
             foreach (var P in POSTS)
+            {
                 P.AtualizaDadosFoto(Utilitarios.GetLarguraTela(Request));
+
+                P.Meu = P.UsuarioId == UsuariloLogado;
+                P.EuCurti = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.Curtida && pp.UsuarioId == UsuariloLogado);
+                P.EuComentei = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.Comentario && pp.UsuarioId == UsuariloLogado);
+
+                if (!P.Meu)
+                {
+                    P.EuDenunciei = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.DenunciaPost && pp.UsuarioId == UsuariloLogado);
+                }
+            }
 
             return Ok(POSTS);
         }
@@ -46,12 +57,55 @@ namespace InstaXamarinWeb.API
                 .Where(pp => pp.UsuarioId == UsuarioID && pp.Bloqueado == false)
                 .OrderByDescending(pp => pp.Data).ToList();
 
+            int UsuariloLogado = Util.Utilitarios.GetTokenUsuarioLogado(Request);
+
             foreach (var P in POSTS)
+            {
                 P.AtualizaDadosFoto(Utilitarios.GetLarguraTela(Request));
+
+                P.Meu = P.UsuarioId == UsuariloLogado;
+                P.EuCurti = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.Curtida && pp.UsuarioId == UsuariloLogado);
+                P.EuComentei = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.Comentario && pp.UsuarioId == UsuariloLogado);
+
+                if (!P.Meu)
+                {
+                    P.EuDenunciei = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.DenunciaPost && pp.UsuarioId == UsuariloLogado);
+                }
+            }
 
             return Ok(POSTS);
         }
 
+
+        //Feed Mapa
+        [APIAutorizacao]
+        [Route("api/posts/feed/mapa")]
+        [HttpGet]
+        public IHttpActionResult FeedMapa()
+        {
+            int UsuariloLogado = Util.Utilitarios.GetTokenUsuarioLogado(Request);
+            List<int> SEGUIDORES = db.Seguidores.Where(ss => ss.SeguidorID == UsuariloLogado).Select(ss => ss.SeguidoID).ToList();
+
+            List<Post> POSTS = db.Posts
+                .Where(pp => (SEGUIDORES.Contains(pp.UsuarioId) || pp.UsuarioId == UsuariloLogado) && pp.Bloqueado == false && (pp.Latitude != 0 && pp.Longitude != 0))
+                .Take(100).ToList();
+
+            foreach (var P in POSTS)
+            {
+                P.AtualizaDadosFoto(Utilitarios.GetLarguraTela(Request));
+
+                P.Meu = P.UsuarioId == UsuariloLogado;
+                P.EuCurti = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.Curtida && pp.UsuarioId == UsuariloLogado);
+                P.EuComentei = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.Comentario && pp.UsuarioId == UsuariloLogado);
+
+                if (!P.Meu)
+                {
+                    P.EuDenunciei = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.DenunciaPost && pp.UsuarioId == UsuariloLogado);
+                }
+            }
+
+            return Ok(POSTS);
+        }
 
         //Get Foto
         [Route("api/posts/{PostID}/foto/{LarguraTela}")]
@@ -209,6 +263,18 @@ namespace InstaXamarinWeb.API
         {
             List<PostInteracao> POST_INTERACOES = db.PostsInteracoes
                 .Where(pp => pp.PostId == PostID && pp.Tipo == PostInteracao.TipoInteracao.Comentario && pp.Bloqueado == false).ToList();
+
+            int UsuariloLogado = Util.Utilitarios.GetTokenUsuarioLogado(Request);
+
+            foreach (var P in POST_INTERACOES)
+            {
+                P.Meu = P.UsuarioId == UsuariloLogado;
+
+                if (!P.Meu)
+                {
+                    P.EuDenunciei = db.PostsInteracoes.Any(pp => pp.ComentarioId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.DenunciaPost && pp.UsuarioId == UsuariloLogado);
+                }
+            }
 
             return Ok(POST_INTERACOES);
         }

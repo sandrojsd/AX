@@ -21,5 +21,7 @@ namespace InstaXamarinMobile.Models
         public int QuantidadePosts { get; set; }
         public int QuantidadeSeguindo { get; set; }
         public int QuantidadeSeguidores { get; set; }
+
+        public bool Sigo { get; set; }
     }
 }

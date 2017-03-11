@@ -47,5 +47,14 @@ namespace InstaXamarinWeb.Models
 
         [Index]
         public bool Bloqueado { get; set; }
+
+        [NotMapped]
+        public bool Meu { get; set; }
+        [NotMapped]
+        public bool EuCurti { get; set; }
+        [NotMapped]
+        public bool EuComentei { get; set; }
+        [NotMapped]
+        public bool EuDenunciei { get; set; }
     }
 }

@@ -64,9 +64,9 @@ namespace InstaXamarinWeb.Util
 
         public static int GetLarguraTela(HttpRequestMessage Request)
         {
-            if (Request.Headers.Any(hh => hh.Key == "LarguraTela"))
+            if (Request.Headers.Any(hh => hh.Key.ToLower() == "larguratela"))
             {
-                String Token = Request.Headers.First(hh => hh.Key == "LarguraTela").Value.First();
+                String Token = Request.Headers.First(hh => hh.Key.ToLower() == "larguratela").Value.First();
                 int RET = -1;
 
                 int.TryParse(Token, out RET);

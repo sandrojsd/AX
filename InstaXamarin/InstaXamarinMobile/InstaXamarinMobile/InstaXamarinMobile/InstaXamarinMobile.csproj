@@ -47,13 +47,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\APIHelper.cs" />
     <Compile Include="ViewModels\CadastroViewModel.cs" />
+    <Compile Include="ViewModels\FeedViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\PostagemViewModel.cs" />
+    <Compile Include="ViewModels\PostDetalheViewModel.cs" />
     <Compile Include="Views\Busca.xaml.cs">
       <DependentUpon>Busca.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Cadastro.xaml.cs">
       <DependentUpon>Cadastro.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ComentarioParcial.xaml.cs">
+      <DependentUpon>ComentarioParcial.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Feed.xaml.cs">
       <DependentUpon>Feed.xaml</DependentUpon>
@@ -72,6 +77,12 @@
     </Compile>
     <Compile Include="Views\Postagem.xaml.cs">
       <DependentUpon>Postagem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PostDetalhado.xaml.cs">
+      <DependentUpon>PostDetalhado.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PostParcial.xaml.cs">
+      <DependentUpon>PostParcial.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +221,24 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Imagens\Foto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\PostParcial.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\PostDetalhado.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ComentarioParcial.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

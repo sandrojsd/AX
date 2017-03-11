@@ -61,7 +61,6 @@ namespace InstaXamarinWeb.Util
                         dst.Save(RET, jpegCodec, encoderParams);
                         return RET.ToArray();
                     }
-
                 }
             }
         }

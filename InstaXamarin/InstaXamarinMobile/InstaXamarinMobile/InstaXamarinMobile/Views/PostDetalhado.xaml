@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
+             xmlns:local="clr-namespace:InstaXamarinMobile"
+             x:Class="InstaXamarinMobile.Views.PostDetalhado">
+    <ContentPage.Content>
+
+        <Grid>
+
+            <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <StackLayout 
+                    BackgroundColor="White"
+                    Margin="5, 2, 5, 2"
+                    Padding="5, 2, 5, 2">
+
+                    <!--Nome do usuário (Link para perfil) + Data-->
+                    <!-- IMPORTANTE: Link para perfil do usuário -->
+                    <StackLayout Orientation="Horizontal" Padding="5">
+                        <Image Source="{Binding POST.UsuarioDados.FotoURL}" WidthRequest="30" HeightRequest="30"></Image>
+                        <Label HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Text="{Binding POST.UsuarioDados.Nome}" TextColor="Black" LineBreakMode="TailTruncation" />
+                        <Label HorizontalOptions="End" VerticalOptions="CenterAndExpand" Text="{Binding POST.Data, StringFormat='{0:dd/MM HH:mm}'}" TextColor="Green" />
+                    </StackLayout>
+
+                    <!--Foto-->
+                    <Image Source="{Binding POST.FotoURL}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Curtir}" NumberOfTapsRequired="2" />
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                    <!--Texto de descrição da foto-->
+                    <Label Text="{Binding POST.Descricao}" TextColor="Black"  LineBreakMode="WordWrap" />
+
+                    <!--Estatisticas (Curtidas, Comentários) e açãp de curtir - ICONIZE -->
+                    <StackLayout Orientation="Horizontal" Margin="0, 10, 0, 0">
+
+                        <!--Curtidas -->
+                        <Label HorizontalOptions="Start" Text="{Binding QuantidadeCurtidas}" TextColor="{Binding IconeCurtidaCor}" />
+                        <iconize:IconImage HeightRequest="20" Icon="{Binding IconeCurtida}" IconColor="{Binding IconeCurtidaCor}" WidthRequest="20">
+                            <iconize:IconImage.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Curtir}" NumberOfTapsRequired="1" />
+                            </iconize:IconImage.GestureRecognizers>
+                        </iconize:IconImage>
+
+                        <StackLayout Padding="10, 0, 0, 0"></StackLayout>
+
+                        <!--Comentários -->
+                        <Label HorizontalOptions="Start" Text="{Binding QuantidadeComentarios}" TextColor="{Binding IconeComentarioCor}"/>
+                        <iconize:IconImage HeightRequest="20" Icon="{Binding IconeComentario}" IconColor="{Binding IconeComentarioCor}" WidthRequest="20"></iconize:IconImage>
+
+                    </StackLayout>
+
+
+                    <!--LISTA COMENTARIOS-->
+                    <StackLayout x:Name="Comentarios" HorizontalOptions="FillAndExpand"></StackLayout>
+
+
+                    <!--COMENTAR FORM-->
+                    <StackLayout BackgroundColor="#ffcccc" Margin="2" Padding="1">
+                        <StackLayout 
+                            BackgroundColor="White"
+                            Padding="3">
+                            <Label HorizontalOptions="Start" Text="Comentar Foto" TextColor="#e6e600" FontSize="Medium" />
+                            <Entry Text="{Binding NovoComentario.Texto}" TextColor="#b38600" HorizontalOptions="FillAndExpand" FontSize="Small" />
+                            <StackLayout 
+                                BackgroundColor="#999900"
+                                HorizontalOptions="End"
+                                Padding="5">
+                                <Label Text="Enviar Comentário" TextColor="Lime" FontSize="Medium">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding EnviarComentario}" NumberOfTapsRequired="1" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+
+
+                    <!--DENUNCIAR BOTAO-->
+                    <Label Text="Denunciar Foto" TextColor="Red" HorizontalOptions="End" FontSize="Small" IsVisible="{Binding POST.NaoMeu}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Denunciar}" NumberOfTapsRequired="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <!--EXCLUIR BOTAO-->
+                    <Label Text="Excluir essa Foto" TextColor="Black" FontAttributes="Bold" HorizontalOptions="End" FontSize="Small" IsVisible="{Binding POST.Meu}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Excluir}" NumberOfTapsRequired="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                </StackLayout>
+
+            </ScrollView>
+
+            <local:LOADING x:Name="LOAD" />
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

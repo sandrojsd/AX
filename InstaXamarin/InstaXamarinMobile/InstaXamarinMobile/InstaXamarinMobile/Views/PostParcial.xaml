@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InstaXamarinMobile.Views.PostParcial"
+             xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
+             BackgroundColor="White"
+             Margin="10, 5, 10, 5"
+             Padding="10, 5, 10, 5">
+
+    <!--Nome do usuário (Link para perfil) + Data-->
+    <!-- IMPORTANTE: Link para perfil do usuário -->
+    <StackLayout Orientation="Horizontal" Padding="5">
+        <Image Source="{Binding UsuarioDados.FotoURL}" WidthRequest="30" HeightRequest="30"></Image>
+        <Label HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Text="{Binding UsuarioDados.Nome}" TextColor="Black" LineBreakMode="TailTruncation" />
+        <Label HorizontalOptions="End" VerticalOptions="CenterAndExpand" Text="{Binding Data, StringFormat='{0:dd/MM HH:mm}'}" TextColor="Green" />
+    </StackLayout>
+
+    <!--Foto-->
+    <Image Source="{Binding FotoURL}"></Image>
+
+    <!--Texto de descrição da foto-->
+    <Label Text="{Binding Descricao}" TextColor="Black" LineBreakMode="WordWrap" />
+
+    <!--Estatisticas (Curtidas, Comentários) e açãp de curtir - ICONIZE -->
+    <StackLayout Orientation="Horizontal" Margin="0, 10, 0, 0">
+
+        <!--Curtidas -->
+        <Label HorizontalOptions="Start" Text="{Binding QuantidadeCurtidas}" TextColor="{Binding IconeCurtidaCor}" />
+        <iconize:IconImage HeightRequest="20" Icon="{Binding IconeCurtida}" IconColor="{Binding IconeCurtidaCor}" WidthRequest="20" />
+
+        <!--Espaço-->
+        <StackLayout Padding="10, 0, 0, 0"></StackLayout>
+
+        <!--Comentários -->
+        <Label HorizontalOptions="Start" Text="{Binding QuantidadeComentarios}" TextColor="{Binding IconeComentarioCor}"/>
+        <iconize:IconImage HeightRequest="20" Icon="{Binding IconeComentario}" IconColor="{Binding IconeComentarioCor}" WidthRequest="20" />
+
+    </StackLayout>
+
+
+</StackLayout>
