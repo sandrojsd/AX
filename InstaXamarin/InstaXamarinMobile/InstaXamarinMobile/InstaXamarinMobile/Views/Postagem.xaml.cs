@@ -55,8 +55,6 @@ namespace InstaXamarinMobile.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            PostagemVM.ColetaPosicao();
         }
     }
 }

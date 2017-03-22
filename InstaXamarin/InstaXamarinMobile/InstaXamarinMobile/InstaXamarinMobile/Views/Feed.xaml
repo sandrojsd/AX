@@ -7,7 +7,7 @@
 
     <Grid>
 
-        <ListView x:Name="Posts" ItemsSource="{Binding POSTS}" HasUnevenRows="True" RowHeight="-1" SeparatorColor="Transparent">
+        <ListView x:Name="Posts" ItemsSource="{Binding POSTS}" HasUnevenRows="True" RowHeight="-1" CachingStrategy="RecycleElement" SeparatorColor="Transparent">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

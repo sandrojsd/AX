@@ -52,5 +52,18 @@
     <array>
       <string>iconize-fontawesome.ttf</string>
     </array>
+    
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Nós podemos usar sua localozação?</string>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Nós queremos usar sua localozação</string>
+
+    <key>NSCameraUsageDescription</key>
+    <string>Esse aplicativo gostaria de usar sua camêra.</string>
+
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Esse aplicativo gostaria de usar suas fotos.</string>
+    
   </dict>
 </plist>

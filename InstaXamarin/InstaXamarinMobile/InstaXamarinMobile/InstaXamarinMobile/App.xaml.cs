@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using XLabs.Platform.Device;
 using XLabs.Ioc;
 using InstaXamarinMobile.Models;
+using XLabs.Platform.Services.Geolocation;
 
 namespace InstaXamarinMobile
 {
@@ -88,6 +89,7 @@ namespace InstaXamarinMobile
         protected override void OnStart()
         {
             // Handle when your app starts
+            ColetaLocalizacao();
         }
 
         protected override void OnSleep()
@@ -98,7 +100,56 @@ namespace InstaXamarinMobile
         protected override void OnResume()
         {
             // Handle when your app resumes
+            ColetaLocalizacao();
         }
+
+
+        #region Localizacao
+
+        public static double Latitude
+        {
+            get { return App.PreferenceGet<double>("Latitude"); }
+            set { App.PreferenceAdd("Latitude", value); }
+        }
+        public static double Longitude
+        {
+            get { return App.PreferenceGet<double>("Longitude"); }
+            set { App.PreferenceAdd("Longitude", value); }
+        }
+        public static bool Localizado
+        {
+            get { return (Latitude != 0 && Longitude != 0); }
+        }
+
+        public static String PositionStatus { get; set; }
+
+        public void ColetaLocalizacao()
+        {
+            if (geolocator == null)
+                geolocator = DependencyService.Get<IGeolocator>() ?? Resolver.Resolve<IGeolocator>();
+
+            this.geolocator.GetPositionAsync(timeout: 10000)
+                .ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                        PositionStatus = ((GeolocationException)t.Exception.InnerException).Error.ToString();
+                    else if (t.IsCanceled)
+                        PositionStatus = "Cancelado";
+                    else
+                    {
+                        PositionStatus = t.Result.Timestamp.ToString("G");
+                        Latitude = t.Result.Latitude;
+                        Longitude = t.Result.Longitude;
+
+                        MessagingCenter.Send<Object>(this, "LocalizacaoEncontrada");
+                    }
+
+                });
+        }
+
+        IGeolocator geolocator;
+
+        #endregion
 
 
         #region Preferences

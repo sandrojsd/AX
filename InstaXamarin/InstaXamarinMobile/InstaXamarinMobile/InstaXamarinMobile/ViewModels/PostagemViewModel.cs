@@ -8,7 +8,6 @@ using Xamarin.Forms;
 using XLabs.Forms.Mvvm;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
-using XLabs.Platform.Services.Geolocation;
 using XLabs.Platform.Services.Media;
 
 namespace InstaXamarinMobile.ViewModels
@@ -35,9 +34,8 @@ namespace InstaXamarinMobile.ViewModels
             {
                 POST.UsuarioId = App.UsuarioLogado.Id;
 
-                POST.Latitude = Latitude;
-                POST.Longitude = Longitude;
-
+                POST.Latitude = App.Latitude;
+                POST.Longitude = App.Longitude;
 
                 Post PostGravado = await API.POST<Post>("api/posts", POST);
 
@@ -79,9 +77,6 @@ namespace InstaXamarinMobile.ViewModels
 
         public Command TiraFotoCommand { get; set; }
         public Command BuscaFotoCommand { get; set; }
-
-        public Double Latitude { get; set; }
-        public Double Longitude { get; set; }
 
 
         private async Task<MediaFile> TirarFoto()
@@ -144,48 +139,10 @@ namespace InstaXamarinMobile.ViewModels
         }
 
 
-        public void ColetaPosicao()
-        {
-            ConfigurarGPS();
-
-            cancelSource = new CancellationTokenSource();
-
-            Latitude = 0;
-            Longitude = 0;
-
-            PositionStatus = String.Empty;
-
-            this.geolocator.GetPositionAsync(timeout: 10000, cancelToken: this.cancelSource.Token, includeHeading: true)
-                .ContinueWith(t =>
-                {
-                    if (t.IsFaulted)
-                        PositionStatus = ((GeolocationException)t.Exception.InnerException).Error.ToString();
-                    else if (t.IsCanceled)
-                        PositionStatus = "Cancelado";
-                    else
-                    {
-                        PositionStatus = t.Result.Timestamp.ToString("G");
-                        Latitude = t.Result.Latitude;
-                        Longitude = t.Result.Longitude;
-                    }
-
-                }, _scheduler);
-        }
+       
 
 
         #region Auxiliares
-
-        String PositionStatus;
-        CancellationTokenSource cancelSource;
-
-        IGeolocator geolocator;
-
-        void ConfigurarGPS()
-        {
-            if (geolocator != null)
-                return;
-            geolocator = DependencyService.Get<IGeolocator>() ?? Resolver.Resolve<IGeolocator>();
-        }
 
 
         private void ConfigurarMedia()

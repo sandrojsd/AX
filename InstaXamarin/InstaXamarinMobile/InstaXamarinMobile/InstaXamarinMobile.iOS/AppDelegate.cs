@@ -36,6 +36,7 @@ namespace InstaXamarinMobile.iOS
             Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
 
             global::Xamarin.Forms.Forms.Init();
+            Xamarin.FormsMaps.Init();
 
             FormsPlugin.Iconize.iOS.IconControls.Init();
 
