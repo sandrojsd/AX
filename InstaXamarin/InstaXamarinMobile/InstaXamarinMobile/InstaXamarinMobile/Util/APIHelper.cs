@@ -20,13 +20,20 @@ namespace InstaXamarinMobile
         //GET
         public async Task<T> GET<T>(string url)
         {
-            IRestRequest request = new RestRequest(url, Method.GET);
-            SetHeadersAllRequest(request);
+            try
+            {
+                IRestRequest request = new RestRequest(url, Method.GET);
+                SetHeadersAllRequest(request);
 
-            var response = await _client.Execute<T>(request);
-            ValidateReturn(response);
-            GetHeadersLastRequest(response.Headers);
-            return response.Data;
+                var response = await _client.Execute<T>(request);
+                ValidateReturn(response);
+                GetHeadersLastRequest(response.Headers);
+                return response.Data;
+            }
+            catch (Exception EX)
+            {
+                throw;
+            }
         }
 
         public async Task<string> GET(string URL)

@@ -1,6 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:local="clr-namespace:InstaXamarinMobile"
+             xmlns:imagemCircular="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
              x:Class="InstaXamarinMobile.Views.Perfil">
-  <Label Text="Perfil" VerticalOptions="Center" HorizontalOptions="Center" />
+    <Grid>
+
+        <ScrollView>
+            <StackLayout Padding="10">
+                <StackLayout Orientation="Horizontal" Padding="0">
+
+                    <!--FOTO PERFIL-->
+                    <StackLayout Orientation="Vertical" WidthRequest="80" Padding="0">
+
+                        <!--<Image Source="{Binding USUARIO.FotoURL}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Image>-->
+                        <imagemCircular:CircleImage Source="{Binding USUARIO.FotoURL}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+
+                        <Label Text="Mudar Foto" TextColor="Green" HorizontalOptions="Center" IsVisible="{Binding USUARIO.Meu}"></Label>
+
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ClickFoto" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" Padding="0">
+
+                        <!--NOME-->
+                        <Label Text="{Binding USUARIO.Nome}" FontSize="20" TextColor="Black"/>
+
+                        <!--POSTS-->
+                        <StackLayout Orientation="Horizontal" Padding="20, 0, 0, 0">
+                            <Label VerticalOptions="Center">Tem</Label>
+                            <Label Text="{Binding USUARIO.QuantidadePosts}" TextColor="Black" FontSize="15" VerticalOptions="Center"/>
+                            <Label VerticalOptions="Center">fotos postadas</Label>
+                        </StackLayout>
+
+                        <!--SEGUINDO-->
+                        <StackLayout Orientation="Horizontal" Padding="20, 0, 0, 0">
+                            <Label VerticalOptions="Center">Segue</Label>
+                            <Label Text="{Binding USUARIO.QuantidadeSeguindo}" TextColor="Black" FontSize="15" VerticalOptions="Center"/>
+                            <Label VerticalOptions="Center">usuários</Label>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ListaSeguidos" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+
+                        <!--SEGUIDORES-->
+                        <StackLayout Orientation="Horizontal" Padding="20, 0, 0, 0">
+                            <Label VerticalOptions="Center">É seguido por</Label>
+                            <Label Text="{Binding USUARIO.QuantidadeSeguidores}" TextColor="Black" FontSize="15" VerticalOptions="Center"/>
+                            <Label VerticalOptions="Center">usuários</Label>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ListaSeguidores" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </StackLayout>
+                    
+                </StackLayout>
+
+
+                <StackLayout IsVisible="{Binding USUARIO.NaoMeu}">
+                    <!--SEGUIR-->
+                    <Button Text="Seguir" Clicked="Seguir_Clicked" HorizontalOptions="CenterAndExpand" BackgroundColor="Blue" TextColor="White"  IsVisible="{Binding USUARIO.NaoSigo}"></Button>
+
+                    <!--DEIXAR DE SEGUIR-->
+                    <Button Text="Deixar de Seguir" Clicked="DeixarSeguir_Clicked"  HorizontalOptions="CenterAndExpand" BackgroundColor="Red" TextColor="White"  IsVisible="{Binding USUARIO.Sigo}"></Button>
+                </StackLayout>
+
+
+                <Button Text="Alterar meus dados" Clicked="AlteraDados_Clicked" IsVisible="{Binding USUARIO.Meu}"></Button>
+
+                <Button Text="Sair" Clicked="Logoff_Clicked" BackgroundColor="Black" TextColor="Yellow" FontSize="Small" IsVisible="{Binding USUARIO.Meu}"></Button>
+
+
+                <!--LISTA DE POSTS-->
+                <Grid VerticalOptions="Start">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="0.5*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackLayout x:Name="PostsColuna1" Orientation="Vertical" Grid.Column="0" VerticalOptions="Start"></StackLayout>
+
+                    <StackLayout x:Name="PostsColuna2" Orientation="Vertical" Grid.Column="1" VerticalOptions="Start"></StackLayout>
+
+                </Grid>
+
+                <Button Text="CANCELAR CONTA" Clicked="CancelarConta_Clicked" BackgroundColor="Red" TextColor="White" FontSize="Small" IsVisible="{Binding USUARIO.Meu}"></Button>
+
+            </StackLayout>
+        </ScrollView>
+
+        <local:LOADING x:Name="LOAD" />
+
+    </Grid>
+
 </ContentPage>

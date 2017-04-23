@@ -46,5 +46,10 @@ namespace InstaXamarinMobile.Views
         {
             PDVM.DenunciarComentario(comentario);
         }
+
+        private void ClickUsuario(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Perfil(PDVM.POST.UsuarioId));
+        }
     }
 }

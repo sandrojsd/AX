@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace InstaXamarinMobile.Droid
 {
-    [Application]
+    [Application(LargeHeap = true)]
     public class MainApplication : Application
     {
         public MainApplication(IntPtr handle, JniHandleOwnership transer)
