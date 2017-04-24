@@ -53,13 +53,9 @@ namespace InstaXamarinWeb.API
         [HttpGet]
         public IHttpActionResult FeedUsuario(int UsuarioID)
         {
-            //List<Post> POSTS = db.Posts
-            //    .Where(pp => pp.UsuarioId == UsuarioID && pp.Bloqueado == false)
-            //    .OrderByDescending(pp => pp.Data).ToList();
-
             List<Post> POSTS = db.Posts
                 .Where(pp => pp.UsuarioId == UsuarioID && pp.Bloqueado == false)
-                .OrderByDescending(pp => pp.Data).Take(2).ToList();
+                .OrderByDescending(pp => pp.Data).ToList();
 
             int UsuariloLogado = Util.Utilitarios.GetTokenUsuarioLogado(Request);
 

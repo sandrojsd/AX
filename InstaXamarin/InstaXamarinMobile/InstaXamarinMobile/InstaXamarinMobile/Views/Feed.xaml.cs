@@ -42,17 +42,11 @@ namespace InstaXamarinMobile.Views
 
         public async Task AtualizaPosts()
         {
-            //LOAD.INICIA("Buscando Fotos...");
-
+            LOAD.INICIA("Buscando Fotos...");
             FVM.Pagina = 1;
             FVM.SemMaisDados = false;
-
-            Posts.IsRefreshing = true;
-            await FVM.BuscaPostsCache();
-            await FVM.BuscaPosts();//API
-            Posts.IsRefreshing = false;
-
-            //LOAD.FINALIZA();
+            await FVM.BuscaPosts();
+            LOAD.FINALIZA();
         }
 
         private async void Posts_Refreshing(object sender, EventArgs e)
@@ -91,6 +85,28 @@ namespace InstaXamarinMobile.Views
                 //Chama tela de detalhe
                 Navigation.PushAsync(new PostDetalhado(PostSelecionado));
             }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (PostSelecionado == null)
+                return;
+
+            FVM.AtualizaDados();
+
+            //Scroll até o post atualizado
+            Task.Run(() =>
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await Task.Delay(300);
+                    Posts.ScrollTo(PostSelecionado, ScrollToPosition.Start, false);
+                    PostSelecionado = null;
+                });
+            });
+
         }
     }
 }

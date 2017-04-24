@@ -7,7 +7,6 @@ using UIKit;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
 using XLabs.Platform.Services.Geolocation;
-using ImageCircle.Forms.Plugin.iOS;
 
 namespace InstaXamarinMobile.iOS
 {
@@ -34,14 +33,10 @@ namespace InstaXamarinMobile.iOS
 
             Resolver.SetResolver(resolverContainer.GetResolver());
 
-            Xamarin.Forms.DependencyService.Register<Custom.AjusteImagem>();
-            Xamarin.Forms.DependencyService.Register<Custom.Arquivo>();
-
             Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
 
             global::Xamarin.Forms.Forms.Init();
             Xamarin.FormsMaps.Init();
-            ImageCircleRenderer.Init();
 
             FormsPlugin.Iconize.iOS.IconControls.Init();
 

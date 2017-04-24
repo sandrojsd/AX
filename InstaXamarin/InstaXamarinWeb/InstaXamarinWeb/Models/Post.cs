@@ -26,17 +26,10 @@ namespace InstaXamarinWeb.Models
 
         [NotMapped]
         public string FotoURL { get; set; }
-        [NotMapped]
-        public string FotoURLPequena { get; set; }
-        [NotMapped]
-        public string FotoURLMiniatura { get; set; }
 
         public void AtualizaDadosFoto(int LarguraTela)
         {
-            FotoURL = Utilitarios.GET_URL("api/posts/" + Id + "/foto/" + LarguraTela.ToString("0"));
-            FotoURLPequena = Utilitarios.GET_URL("api/posts/" + Id + "/foto/" + (LarguraTela * 0.43).ToString("0"));
-            FotoURLMiniatura = Utilitarios.GET_URL("api/posts/" + Id + "/foto/" + (LarguraTela / 5).ToString("0"));
-
+            FotoURL = Utilitarios.GET_URL("api/posts/" + Id + "/foto/" + LarguraTela);
             Foto = null;
         }
 

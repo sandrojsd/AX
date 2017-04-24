@@ -1,5 +1,4 @@
 ﻿using InstaXamarinMobile.Models;
-using InstaXamarinMobile.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -46,15 +45,24 @@ namespace InstaXamarinMobile.ViewModels
                 __POSTS.Remove(PostRemovido);
                 POSTS = __POSTS;
             });
+
         }
 
-        public async Task BuscaPostsCache()
+        public void AtualizaDados()
         {
-            //Alimanta com o Cache
-            using (DBHelper DB = new DBHelper())
+            if (_POSTS == null)
+                return;
+
+            var __POSTS = _POSTS;
+            POSTS = null;
+
+            Task.Run(() =>
             {
-                POSTS = new ObservableCollection<Post>(await DB.GetCache());
-            }
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    POSTS = __POSTS;
+                });
+            });
         }
 
         public async Task BuscaPosts()
@@ -69,15 +77,7 @@ namespace InstaXamarinMobile.ViewModels
                     var POSTSRetorno = await API.GET<ObservableCollection<Post>>("api/posts/feed/?Pagina=" + Pagina + "&QuantidadePagina=" + QuantidadePagina);
 
                     if (Pagina == 1)//Renova
-                    {
                         POSTS = POSTSRetorno;
-
-                        //Grava Cache
-                        using (DBHelper DB = new DBHelper())
-                        {
-                            DB.SalvarTudo(POSTSRetorno.ToList());
-                        }
-                    }
                     else // Incrementa
                         foreach (var P in POSTSRetorno)
                             POSTS.Add(P);
