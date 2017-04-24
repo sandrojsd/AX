@@ -7,6 +7,7 @@ using UIKit;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
 using XLabs.Platform.Services.Geolocation;
+using ImageCircle.Forms.Plugin.iOS;
 
 namespace InstaXamarinMobile.iOS
 {
@@ -39,6 +40,7 @@ namespace InstaXamarinMobile.iOS
 
             global::Xamarin.Forms.Forms.Init();
             Xamarin.FormsMaps.Init();
+            ImageCircleRenderer.Init();
 
             FormsPlugin.Iconize.iOS.IconControls.Init();
 

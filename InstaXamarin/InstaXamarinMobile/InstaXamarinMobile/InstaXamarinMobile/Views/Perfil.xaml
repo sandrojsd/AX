@@ -13,7 +13,8 @@
                     <!--FOTO PERFIL-->
                     <StackLayout Orientation="Vertical" WidthRequest="80" Padding="0">
 
-                        <Image Source="{Binding USUARIO.FotoURL}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Image>
+                        <imagemCircular:CircleImage Source="{Binding USUARIO.FotoURL}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+                        <!--<Image Source="{Binding USUARIO.FotoURL}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Image>-->
 
                         <Label Text="Mudar Foto" TextColor="Green" HorizontalOptions="Center" IsVisible="{Binding USUARIO.Meu}"></Label>
 

@@ -9,6 +9,7 @@ using Android.OS;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
 using XLabs.Platform.Services.Geolocation;
+using ImageCircle.Forms.Plugin.Droid;
 
 namespace InstaXamarinMobile.Droid
 {
@@ -34,6 +35,7 @@ namespace InstaXamarinMobile.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsMaps.Init(this, bundle);
+            ImageCircleRenderer.Init();
 
             FormsPlugin.Iconize.Droid.IconControls.Init(Resource.Id.toolbar, Resource.Id.sliding_tabs);
 

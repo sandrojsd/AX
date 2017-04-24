@@ -178,18 +178,18 @@ namespace InstaXamarinMobile.Views
 
         private void ListaSeguidos(object sender, EventArgs e)
         {
-            //ListaUsuarios LU = new ListaUsuarios();
-            //LU.Config(ListaUsuarios.TipoLista.Seguidos, PVM.IdUsuario);
+            ListaUsuarios LU = new ListaUsuarios();
+            LU.Config(ListaUsuarios.TipoLista.Seguidos, PVM.IdUsuario);
 
-            //Navigation.PushAsync(LU);
+            Navigation.PushAsync(LU);
         }
 
         private void ListaSeguidores(object sender, EventArgs e)
         {
-            //ListaUsuarios LU = new ListaUsuarios();
-            //LU.Config(ListaUsuarios.TipoLista.Seguidores, PVM.IdUsuario);
+            ListaUsuarios LU = new ListaUsuarios();
+            LU.Config(ListaUsuarios.TipoLista.Seguidores, PVM.IdUsuario);
 
-            //Navigation.PushAsync(LU);
+            Navigation.PushAsync(LU);
         }
     }
 }

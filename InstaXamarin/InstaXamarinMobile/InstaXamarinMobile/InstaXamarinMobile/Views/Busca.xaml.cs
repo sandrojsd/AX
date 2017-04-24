@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InstaXamarinMobile.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,30 @@ namespace InstaXamarinMobile.Views
         public Busca()
         {
             InitializeComponent();
+
+            txtBusca.SearchButtonPressed += Busca_SearchButtonPressed;
+        }
+
+        private async void Busca_SearchButtonPressed(object sender, EventArgs e)
+        {
+            LOAD.INICIA("Realizando busca de usuários...");
+            await ListaUsuarios.BuscaUsuarios(txtBusca.Text);
+            LOAD.FINALIZA();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            MessagingCenter.Subscribe<Object, Usuario>(this, "ListaUsuarioItemSelecionado", (sender, usuario) => {
+                Navigation.PushAsync(new Perfil(usuario.Id));
+            });
+        }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            MessagingCenter.Unsubscribe<Object, Usuario>(this, "ListaUsuarioItemSelecionado");
         }
     }
 }
