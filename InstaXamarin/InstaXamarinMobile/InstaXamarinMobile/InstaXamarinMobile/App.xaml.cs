@@ -15,7 +15,8 @@ namespace InstaXamarinMobile
     {
         #region Preferences Data
 
-        public const string URL = "http://10.10.10.10:4000/";
+        //public const string URL = "http://10.10.10.10:4000/";
+        public const string URL = "http://instaxamarin.azurewebsites.net/";
 
         public static App Current;
 
@@ -67,22 +68,23 @@ namespace InstaXamarinMobile
                 MainPage = new NavigationPage(new Views.Home());
             });
 
-            //MessagingCenter.Subscribe<object>(this, "Logoff", async (sender) => {
-            //    using (APIHelper API = new APIHelper())
-            //    {
-            //        try
-            //        {
-            //            await API.POST("api/usuario/logoff", new { });
-            //        }
-            //        catch (Exception)
-            //        {
-            //        }
-            //        UsuarioLogado = null; //Limpa dados
-            //        API.HeadersAllRequests = new Dictionary<string, string>();
-            //    }
+            MessagingCenter.Subscribe<object>(this, "Logoff", async (sender) =>
+            {
+                using (APIHelper API = new APIHelper())
+                {
+                    try
+                    {
+                        await API.POST("api/usuario/logoff", new { });
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    UsuarioLogado = null; //Limpa dados
+                    API.HeadersAllRequests = new Dictionary<string, string>();
+                }
 
-            //    MainPage = new Views.Login();
-            //});
+                MainPage = new Views.Login();
+            });
         }
 
 

@@ -35,8 +35,13 @@ namespace InstaXamarinMobile.ViewModels
                 {
                     Dictionary<String, String> Headers = API.HeadersAllRequests;
                     //Add Token
-                    if (API.HeadersLastRequest.ContainsKey("token"))
-                        Headers.Add("token", API.HeadersLastRequest["token"]);
+                    if (API.HeadersLastResponse.ContainsKey("token"))
+                    {
+                        if (Headers.ContainsKey("token"))
+                            Headers["token"] = API.HeadersLastResponse["token"];
+                        else
+                            Headers.Add("token", API.HeadersLastResponse["token"]);
+                    }
                     API.HeadersAllRequests = Headers;//SET
 
                     MessagingCenter.Send<object>(this, "Logado");

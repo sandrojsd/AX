@@ -131,6 +131,7 @@ namespace InstaXamarinWeb.API
             try
             {
                 USUARIO.Foto = FotoBase64.ToByteArray().Redimenciona(200, 200);
+                USUARIO.FotoDataAtualizacao = DateTime.Now;
                 db.SaveChanges();
 
                 return StatusCode(HttpStatusCode.NoContent);
@@ -139,6 +140,23 @@ namespace InstaXamarinWeb.API
             {
                 return InternalServerError(EX);
             }
+        }
+
+        //Get Usuario
+        [APIAutorizacao]
+        [Route("api/usuario/{UsuarioID}")]
+        [HttpGet]
+        public HttpResponseMessage DadosUsuario(int UsuarioID)
+        {
+            int IdUsuarioLogado = Util.Utilitarios.GetTokenUsuarioLogado(Request);
+
+            Usuario RETORNO = db.Usuarios.Find(UsuarioID);
+
+            RETORNO.Meu = UsuarioID == IdUsuarioLogado;
+            if (!RETORNO.Meu)
+                RETORNO.Sigo = db.Seguidores.Any(ss => ss.SeguidoID == RETORNO.Id && ss.SeguidorID == IdUsuarioLogado);
+
+            return Request.CreateResponse(HttpStatusCode.OK, RETORNO);
         }
 
 
@@ -221,7 +239,7 @@ namespace InstaXamarinWeb.API
                 Usuario Seguidor = db.Usuarios.Find(Util.Utilitarios.GetTokenUsuarioLogado(Request));
                 Seguidor.QuantidadeSeguindo++;
                 Usuario Seguido = db.Usuarios.Find(SeguidoID);
-                Seguidor.QuantidadeSeguidores++;
+                Seguido.QuantidadeSeguidores++;
 
                 db.SaveChanges();
             }
@@ -242,7 +260,7 @@ namespace InstaXamarinWeb.API
                 Usuario Seguidor = db.Usuarios.Find(SEGUIDOR.SeguidorID);
                 Seguidor.QuantidadeSeguindo--;
                 Usuario Seguido = db.Usuarios.Find(SEGUIDOR.SeguidoID);
-                Seguidor.QuantidadeSeguidores--;
+                Seguido.QuantidadeSeguidores--;
 
                 db.Seguidores.Remove(SEGUIDOR);
                 db.SaveChanges();
@@ -266,7 +284,10 @@ namespace InstaXamarinWeb.API
 
             int UsuarioLogado = Util.Utilitarios.GetTokenUsuarioLogado(Request);
             foreach (var U in Seguidores)
+            {
                 U.Sigo = db.Seguidores.Any(ss => ss.SeguidorID == UsuarioLogado && ss.SeguidoID == U.Id);
+                U.Meu = U.Id == UsuarioLogado;
+            }
 
             return Ok(Seguidores);
         }
@@ -283,7 +304,10 @@ namespace InstaXamarinWeb.API
 
             int UsuarioLogado = Util.Utilitarios.GetTokenUsuarioLogado(Request);
             foreach (var U in Seguidos)
+            {
                 U.Sigo = db.Seguidores.Any(ss => ss.SeguidorID == UsuarioLogado && ss.SeguidoID == U.Id);
+                U.Meu = U.Id == UsuarioLogado;
+            }
 
             return Ok(Seguidos);
         }
@@ -297,9 +321,9 @@ namespace InstaXamarinWeb.API
         {
             List<Usuario> ResultadoBusca = db.Usuarios.Where(uu => uu.Nome.ToLower().Contains(termo.ToLower())).ToList();
 
-            int UsuariloLogado = Util.Utilitarios.GetTokenUsuarioLogado(Request);
+            int UsuarioLogado = Util.Utilitarios.GetTokenUsuarioLogado(Request);
             foreach (var U in ResultadoBusca)
-                U.Sigo = db.Seguidores.Any(ss => ss.SeguidorID == UsuariloLogado && ss.SeguidoID == U.Id);
+                U.Sigo = db.Seguidores.Any(ss => ss.SeguidorID == UsuarioLogado && ss.SeguidoID == U.Id);
 
             return Ok(ResultadoBusca);
         }

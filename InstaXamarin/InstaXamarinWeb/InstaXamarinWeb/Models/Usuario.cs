@@ -31,7 +31,29 @@ namespace InstaXamarinWeb.Models
         public byte[] Foto { get; set; }
 
         [NotMapped]
-        public string FotoURL { get { return Util.Utilitarios.GET_URL("api/usuario/" + Id + "/foto"); } }
+        public string FotoURL
+        {
+            get
+            {
+                return (Foto != null ? Util.Utilitarios.GET_URL("api/usuario/" + Id + "/foto?versao=" + FotoVersao) : "logo.png");
+            }
+        }
+
+        [NotMapped]
+        [JsonIgnore]
+        public string FotoVersao
+        {
+            get
+            {
+                if (FotoDataAtualizacao != null && FotoDataAtualizacao != DateTime.MinValue)
+                    return FotoDataAtualizacao.ToString("ddMMyyyyHHmmss");
+                else
+                    return "1";
+            }
+        }
+
+        [JsonIgnore]
+        public DateTime FotoDataAtualizacao { get; set; }
 
         public int QuantidadePosts { get; set; }
         public int QuantidadeSeguindo { get; set; }
@@ -42,6 +64,9 @@ namespace InstaXamarinWeb.Models
 
         [NotMapped]
         public bool Sigo { get; set; }
+
+        [NotMapped]
+        public bool Meu { get; set; }
 
     }
 }
