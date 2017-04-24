@@ -35,6 +35,7 @@ namespace InstaXamarinMobile.iOS
             Resolver.SetResolver(resolverContainer.GetResolver());
 
             Xamarin.Forms.DependencyService.Register<Custom.AjusteImagem>();
+            Xamarin.Forms.DependencyService.Register<Custom.Arquivo>();
 
             Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
 

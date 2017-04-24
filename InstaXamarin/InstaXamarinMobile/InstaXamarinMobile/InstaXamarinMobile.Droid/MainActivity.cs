@@ -32,6 +32,7 @@ namespace InstaXamarinMobile.Droid
             base.OnCreate(bundle);
 
             Xamarin.Forms.DependencyService.Register<Custom.AjusteImagem>();
+            Xamarin.Forms.DependencyService.Register<Custom.Arquivo>();
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsMaps.Init(this, bundle);
