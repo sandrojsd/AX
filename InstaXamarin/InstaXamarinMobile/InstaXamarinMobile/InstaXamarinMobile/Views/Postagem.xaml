@@ -22,11 +22,12 @@
           <Button Command="{Binding BuscaFotoCommand}" Text="Biblioteca" Grid.Column="1" Style="{StaticResource Pequeno}" />
         </Grid>
 
-        <Editor x:Name="txtDescricao" Keyboard="Text" HeightRequest="100" TextColor="Black" BackgroundColor="#FFFFCC" Text="{Binding POST.Descricao}"></Editor>
+                <Editor x:Name="txtDescricao" Keyboard="Text" HeightRequest="100" TextColor="Black" BackgroundColor="#FFFFCC" Text="{Binding POST.Descricao}" Focused="AbreTeclado" Unfocused="FechaTeclado"></Editor>
 
         <Button x:Name="btnPostar" Text="Postar" Style="{StaticResource Importante}"></Button>
 
-      </StackLayout>
+        <StackLayout x:Name="EspacoTeclado" HeightRequest="0" />
+    </StackLayout>
 
     </ScrollView>
 

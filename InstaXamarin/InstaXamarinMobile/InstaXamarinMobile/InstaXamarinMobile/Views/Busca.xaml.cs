@@ -15,7 +15,11 @@ namespace InstaXamarinMobile.Views
         {
             InitializeComponent();
 
+            if (Device.OS == TargetPlatform.iOS)
+                Title = "Busca";
+
             txtBusca.SearchButtonPressed += Busca_SearchButtonPressed;
+            txtBusca.HeightRequest = 40;
         }
 
         private async void Busca_SearchButtonPressed(object sender, EventArgs e)

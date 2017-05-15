@@ -19,6 +19,10 @@ namespace InstaXamarinMobile.Views
         public Mapa()
         {
             InitializeComponent();
+
+            if (Device.OS == TargetPlatform.iOS)
+                Title = "Mapa";
+
             MVM = new MapaViewModel();
 
             //Ponto central padrão - São Paulo

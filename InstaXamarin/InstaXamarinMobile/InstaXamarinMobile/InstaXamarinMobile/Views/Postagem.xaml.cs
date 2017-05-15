@@ -17,6 +17,9 @@ namespace InstaXamarinMobile.Views
         {
             InitializeComponent();
 
+            if (Device.OS == TargetPlatform.iOS)
+                Title = "Postar";
+
             PostagemVM = new PostagemViewModel();
             BindingContext = PostagemVM;
 
@@ -55,6 +58,17 @@ namespace InstaXamarinMobile.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
+        }
+
+        void AbreTeclado(object sender, EventArgs e)
+        {
+            if (Device.OS == TargetPlatform.Android)
+                EspacoTeclado.HeightRequest = 120;
+        }
+        void FechaTeclado(object sender, EventArgs e)
+        {
+            if (Device.OS == TargetPlatform.Android)
+                EspacoTeclado.HeightRequest = 0;
         }
     }
 }

@@ -46,5 +46,21 @@ namespace InstaXamarinMobile.Views
         {
             PDVM.DenunciarComentario(comentario);
         }
+
+        void AbreTeclado(object sender, EventArgs e)
+        {
+            if (Device.OS == TargetPlatform.Android)
+                EspacoTeclado.HeightRequest = 120;
+        }
+        void FechaTeclado(object sender, EventArgs e)
+        {
+            if (Device.OS == TargetPlatform.Android)
+                EspacoTeclado.HeightRequest = 0;
+        }
+
+        private void ClickHeaderPost(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Perfil(PDVM.POST.UsuarioId));
+        }
     }
 }

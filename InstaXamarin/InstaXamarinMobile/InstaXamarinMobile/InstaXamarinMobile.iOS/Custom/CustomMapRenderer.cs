@@ -129,7 +129,7 @@ namespace InstaXamarinMobile.iOS.Custom
             if (AV.ImagemCache != null)
                 image.Image = UIImage.LoadFromData(AV.ImagemCache);
             else
-                ImageFromUrl(image, ((MapAnnotation)e.View.Annotation).PinoFoto.POST.FotoURL, AV);
+                ImageFromUrl(image, ((MapAnnotation)e.View.Annotation).PinoFoto.POST.FotoURLMiniatura, AV);
 
             customPinView.Center = new CGPoint(25, -(e.View.Frame.Height + 25));
 

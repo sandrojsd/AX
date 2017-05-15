@@ -19,15 +19,17 @@
 
           <StackLayout HeightRequest="10" />
 
-          <Entry x:Name="txtEmail" Text="{Binding USUARIO.Email}" Keyboard="Email" Placeholder="Email"></Entry>
+                    <Entry x:Name="txtEmail" Text="{Binding USUARIO.Email}" Keyboard="Email" Placeholder="Email" Focused="AbreTeclado" Unfocused="FechaTeclado"></Entry>
 
-          <Entry x:Name="txtSenha" Text="{Binding USUARIO.Senha}" IsPassword="true" Placeholder="Senha"></Entry>
+                    <Entry x:Name="txtSenha" Text="{Binding USUARIO.Senha}" IsPassword="true" Placeholder="Senha" Focused="AbreTeclado" Unfocused="FechaTeclado"></Entry>
 
           <Button Text="Entrar" x:Name="btnEntrar"></Button>
 
           <StackLayout HeightRequest="10" />
 
           <Button Text="Cadastrar" x:Name="btnNovoUsuario" Style="{StaticResource Importante}"></Button>
+
+            <StackLayout x:Name="EspacoTeclado" HeightRequest="0" />
         </StackLayout>
 
       </ScrollView>

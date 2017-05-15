@@ -55,6 +55,19 @@ namespace InstaXamarinMobile.Views
             {
                 await Navigation.PushModalAsync(new Cadastro());
             };
+
+
+        }
+
+        void AbreTeclado(object sender, EventArgs e)
+        {
+            if (Device.OS == TargetPlatform.Android)
+                EspacoTeclado.HeightRequest = 200;
+        }
+        void FechaTeclado(object sender, EventArgs e)
+        {
+            if (Device.OS == TargetPlatform.Android)
+                EspacoTeclado.HeightRequest = 0;
         }
     }
 }

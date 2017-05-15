@@ -15,15 +15,17 @@
 
           <StackLayout HeightRequest="10" />
 
-          <Entry x:Name="txtNome" Text="{Binding CADASTRO.Nome}"  Keyboard="Text" Placeholder="Nome"></Entry>
-          <Entry x:Name="txtEmail" Text="{Binding CADASTRO.Email}" Keyboard="Email" Placeholder="E-mail"></Entry>
-          <Entry x:Name="txtSenha" Text="{Binding CADASTRO.Senha}" Keyboard="Default" Placeholder="Senha" IsPassword="True"></Entry>
+            <Entry x:Name="txtNome" Text="{Binding CADASTRO.Nome}"  Keyboard="Text" Placeholder="Nome" Focused="AbreTeclado" Unfocused="FechaTeclado"></Entry>
+            <Entry x:Name="txtEmail" Text="{Binding CADASTRO.Email}" Keyboard="Email" Placeholder="E-mail" Focused="AbreTeclado" Unfocused="FechaTeclado"></Entry>
+            <Entry x:Name="txtSenha" Text="{Binding CADASTRO.Senha}" Keyboard="Default" Placeholder="Senha" IsPassword="True" Focused="AbreTeclado" Unfocused="FechaTeclado"></Entry>
 
           <Button Text="Cadastrar" x:Name="btnCadastro" Clicked="Cadastrar"></Button>
 
           <StackLayout HeightRequest="10" />
 
           <Button Text="Voltar para o Login" x:Name="btnVoltar" Clicked="Voltar"  Style="{StaticResource Importante}"></Button>
+
+          <StackLayout x:Name="EspacoTeclado" HeightRequest="0" />
 
         </StackLayout>
 

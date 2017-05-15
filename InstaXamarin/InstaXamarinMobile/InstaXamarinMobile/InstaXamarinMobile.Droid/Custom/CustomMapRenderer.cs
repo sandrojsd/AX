@@ -118,7 +118,7 @@ namespace InstaXamarinMobile.Droid
                 //FOTO
                 ImageView InfoFoto = view.FindViewById<ImageView>(Resource.Id.InfoWindowFoto);
                 if (InfoFoto != null)
-                    GetImageBitmapFromUrl(InfoFoto, PIN.POST.FotoURL);
+                    GetImageBitmapFromUrl(InfoFoto, PIN.POST.FotoURLMiniatura);
 
                 return view;
             }

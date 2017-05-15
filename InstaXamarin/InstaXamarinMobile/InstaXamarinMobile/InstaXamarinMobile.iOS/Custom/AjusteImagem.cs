@@ -18,19 +18,16 @@ namespace InstaXamarinMobile.iOS.Custom
     {
         public byte[] Cortar(byte[] imagem, int Largura, int Altura)
         {
-            byte[] ImagemRetorno = null;
-            byte[] ImagemRedimencioada = null;
-
-            int DiferencaLargura = 0;
-            int DiferencaAltura = 0;
-
-            //Redimenciona
-            using (var originalData = NSData.FromArray(imagem))
+            using (var dadosImagem = NSData.FromArray(imagem))
             {
-                using (var originalImage = UIImage.LoadFromData(originalData))
+                using (var imagemParaCortar = UIImage.LoadFromData(dadosImagem))
                 {
-                    int LarguraOriginalImagem = ((int)originalImage.CGImage.Width);
-                    int AlturaOriginalImagem = ((int)originalImage.CGImage.Height);
+                    int DiferencaLargura = 0;
+                    int DiferencaAltura = 0;
+
+                    //REDIMENCIONA PROPOSCIONALMENTE
+                    int LarguraOriginalImagem = ((int)imagemParaCortar.Size.Width);
+                    int AlturaOriginalImagem = ((int)imagemParaCortar.Size.Height);
 
                     var larguraNova = Largura;
                     var alturaNova = Altura;
@@ -46,62 +43,46 @@ namespace InstaXamarinMobile.iOS.Custom
                         DiferencaAltura = alturaNova - Altura;
                     }
 
-                    ImagemRedimencioada = originalImage.Scale(new SizeF((float)larguraNova, (float)alturaNova)).AsJPEG().ToArray();
+                    UIGraphics.BeginImageContext(new SizeF(larguraNova, alturaNova));
 
-                }
-            }
+                    imagemParaCortar.Draw(new RectangleF(0, 0, larguraNova, alturaNova));
 
+                    var imagemRedimencionada = UIGraphics.GetImageFromCurrentImageContext();
 
-            //Corta
-
-            //Descobra o X e Y para o corte // Precisa ser exatamento o centro.
-            int X = 0;
-            int Y = 0;
-
-            if (DiferencaLargura > 0)
-            {
-                X = DiferencaLargura / 2;
-            }
-
-            if (DiferencaAltura > 0)
-            {
-                Y = DiferencaAltura / 2;
-            }
+                    UIGraphics.EndImageContext();
 
 
-            using (var data = NSData.FromArray(ImagemRedimencioada))
-            {
-                using (var photoToCropCGImage = UIImage.LoadFromData(data).CGImage)
-                {
-                    //crop image
-                    using (var photoCroppedCGImage = photoToCropCGImage.WithImageInRect(new CGRect((nfloat)X, (nfloat)Y, (nfloat)Largura, (nfloat)Altura)))
+                    //CORTA
+
+                    int X = 0;
+                    int Y = 0;
+
+                    if (DiferencaLargura > 0)
                     {
-                        using (var photoCroppedUIImage = UIImage.FromImage(photoCroppedCGImage))
-                        {
-                            //create a 24bit RGB image to the output size
-                            using (var cGBitmapContext = new CGBitmapContext(IntPtr.Zero, (int)Largura, (int)Altura, 8, (int)(4 * Largura), CGColorSpace.CreateDeviceRGB(), CGImageAlphaInfo.PremultipliedFirst))
-                            {
-                                var photoOutputRectangleF = new RectangleF(0f, 0f, (float)Largura, (float)Altura);
-
-                                // draw the cropped photo resized 
-                                cGBitmapContext.DrawImage(photoOutputRectangleF, photoCroppedUIImage.CGImage);
-
-                                //get cropped resized photo
-                                var photoOutputUIImage = UIKit.UIImage.FromImage(cGBitmapContext.ToImage());
-
-                                //convert cropped resized photo to bytes and then stream
-                                using (var photoOutputNsData = photoOutputUIImage.AsJPEG())
-                                {
-                                    ImagemRetorno = new Byte[photoOutputNsData.Length];
-                                    System.Runtime.InteropServices.Marshal.Copy(photoOutputNsData.Bytes, ImagemRetorno, 0, Convert.ToInt32(photoOutputNsData.Length));
-                                }
-                            }
-                        }
+                        X = DiferencaLargura / 2;
                     }
+
+                    if (DiferencaAltura > 0)
+                    {
+                        Y = DiferencaAltura / 2;
+                    }
+
+                    var imgSize = imagemRedimencionada.Size;
+
+                    UIGraphics.BeginImageContext(new SizeF(Largura, Altura));
+
+                    var context = UIGraphics.GetCurrentContext();
+                    var clippedRect = new RectangleF(0, 0, Largura, Altura);
+                    context.ClipToRect(clippedRect);
+                    var drawRect = new RectangleF(-X, -Y, (float)imgSize.Width, (float)imgSize.Height);
+                    imagemRedimencionada.Draw(drawRect);
+                    var modifiedImage = UIGraphics.GetImageFromCurrentImageContext();
+
+                    UIGraphics.EndImageContext();
+
+                    return modifiedImage.AsJPEG().ToArray();
                 }
             }
-
-            return ImagemRetorno;
         }
     }
 }

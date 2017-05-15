@@ -35,6 +35,8 @@ namespace InstaXamarinMobile.Models
         }
 
         public string FotoURL { get; set; }
+        public string FotoURLPequena { get; set; }
+        public string FotoURLMiniatura { get; set; }
 
         [Ignore]
         public byte[] Foto { get; set; }

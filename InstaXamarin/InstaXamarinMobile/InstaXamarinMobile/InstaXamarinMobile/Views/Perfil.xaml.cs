@@ -12,6 +12,7 @@ using Xamarin.Forms;
 using InstaXamarinMobile.Models;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
+using InstaXamarinMobile.Util;
 
 namespace InstaXamarinMobile.Views
 {
@@ -24,6 +25,9 @@ namespace InstaXamarinMobile.Views
         {
             this.IdUsuario = App.UsuarioLogado.Id;
             Inicializa();
+
+            if (Device.OS == TargetPlatform.iOS)
+                Title = "Perfil";
         }
         public Perfil(int IdUsuario)
         {
@@ -73,6 +77,12 @@ namespace InstaXamarinMobile.Views
                 }
             });
 
+            MessagingCenter.Subscribe<Object, byte[]>(this, "FotoColetada", (sender, imagem) =>
+            {
+                PVM.TrocarFoto(imagem);
+                AtualizandoFoto = false;
+            });
+
             if (!AtualizandoFoto)
             {
                 LOAD.INICIA("Buscando dados do Usuário...");
@@ -85,6 +95,7 @@ namespace InstaXamarinMobile.Views
             base.OnDisappearing();
             MessagingCenter.Unsubscribe<Object, Usuario>(this, "DadosUsuarioAtualizados");
             MessagingCenter.Unsubscribe<Object>(this, "PostsUsuarioAtualizados");
+            MessagingCenter.Unsubscribe<Object, byte[]>(this, "FotoColetada");
         }
 
 
@@ -161,15 +172,17 @@ namespace InstaXamarinMobile.Views
             {
                 case "Camêra":
                     AtualizandoFoto = true;
-                    await PVM.TirarFoto();
-                    await PVM.TrocarFoto();
-                    AtualizandoFoto = false;
+                    Device.BeginInvokeOnMainThread(() => {
+                        using (FotoHelper FOTO = new FotoHelper())
+                            FOTO.TirarFoto(200, 200);
+                    });
                     break;
                 case "Biblioteca":
                     AtualizandoFoto = true;
-                    await PVM.BuscarFoto();
-                    await PVM.TrocarFoto();
-                    AtualizandoFoto = false;
+                    Device.BeginInvokeOnMainThread(() => {
+                        using (FotoHelper FOTO = new FotoHelper())
+                            FOTO.BuscarFoto(200, 200);
+                    });
                     break;
                 default:
                     break;

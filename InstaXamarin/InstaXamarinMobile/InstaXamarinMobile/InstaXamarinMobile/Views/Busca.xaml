@@ -8,7 +8,7 @@
     <Grid>
 
         <StackLayout>
-            <SearchBar x:Name="txtBusca" Placeholder="Pesquisa usuário" ></SearchBar>
+            <SearchBar x:Name="txtBusca" Placeholder="Pesquisa usuário" VerticalOptions="Start"></SearchBar>
             <local2:ListaUsuariosParcial x:Name="ListaUsuarios" />
         </StackLayout>
 

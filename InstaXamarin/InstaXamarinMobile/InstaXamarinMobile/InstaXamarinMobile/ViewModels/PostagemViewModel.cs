@@ -1,4 +1,5 @@
 ﻿using InstaXamarinMobile.Models;
+using InstaXamarinMobile.Util;
 using InstaXamarinMobile.Views;
 using System;
 using System.IO;
@@ -16,10 +17,7 @@ namespace InstaXamarinMobile.ViewModels
     {
         public PostagemViewModel()
         {
-            ConfigurarMedia();
-
             POST = new Post();
-
             Imagem = ImageSource.FromResource("InstaXamarinMobile.Imagens.Foto.png");
 
             TiraFotoCommand = new Command(async () => await TirarFoto(), () => true);
@@ -61,110 +59,39 @@ namespace InstaXamarinMobile.ViewModels
                 SetProperty(ref _imagem, value);
             }
         }
-
-        private string _status;
-        public string Status
-        {
-            get
-            {
-                return _status;
-            }
-            set
-            {
-                SetProperty(ref _status, value);
-            }
-        }
+      
 
         public Command TiraFotoCommand { get; set; }
         public Command BuscaFotoCommand { get; set; }
 
 
-        private async Task<MediaFile> TirarFoto()
+        private async Task TirarFoto()
         {
-            ConfigurarMedia();
-
-            return await _mediaPicker.TakePhotoAsync(new CameraMediaStorageOptions { DefaultCamera = CameraDevice.Rear, MaxPixelDimension = 1000 }).ContinueWith(t =>
+            using (FotoHelper FOTO = new FotoHelper())
             {
-                if (t.IsFaulted)
+                await FOTO.TirarFoto(1000, 1000);
+                if (FOTO.FotoColetada)
                 {
-                    Status = t.Exception.InnerException.ToString();
+                    POST.Foto = FOTO.ImagemBytes;
+                    Imagem = FOTO.GetImageSource();
                 }
-                else if (t.IsCanceled)
-                {
-                    Status = "Cancelou";
-                }
-                else
-                {
-                    var mediaFile = t.Result;
-
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        mediaFile.Source.CopyTo(ms);
-                        POST.Foto = ms.ToArray();
-                    }
-
-                    Imagem = ImageSource.FromStream(() => mediaFile.Source);
-
-                    return mediaFile;
-                }
-
-                return null;
-            }, _scheduler);
+            }
         }
 
         private async Task BuscarFoto()
         {
-            ConfigurarMedia();
-
-            try
+            using (FotoHelper FOTO = new FotoHelper())
             {
-                var mediaFile = await _mediaPicker.SelectPhotoAsync(new CameraMediaStorageOptions
+                await FOTO.BuscarFoto(1000, 1000);
+                if (FOTO.FotoColetada)
                 {
-                    DefaultCamera = CameraDevice.Rear,
-                    MaxPixelDimension = 1000
-                });
-
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    mediaFile.Source.CopyTo(ms);
-                    POST.Foto = ms.ToArray();
+                    POST.Foto = FOTO.ImagemBytes;
+                    Imagem = FOTO.GetImageSource();
                 }
-
-                Imagem = ImageSource.FromStream(() => mediaFile.Source);
-            }
-            catch (System.Exception ex)
-            {
-                Status = ex.Message;
             }
         }
 
 
-       
-
-
-        #region Auxiliares
-
-
-        private void ConfigurarMedia()
-        {
-            if (_mediaPicker != null)
-                return;
-
-            var device = Resolver.Resolve<IDevice>();
-
-            _mediaPicker = DependencyService.Get<IMediaPicker>() ?? device.MediaPicker;
-        }
-
-        private readonly TaskScheduler _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-
-        private IMediaPicker _mediaPicker;
-
-        private static double ConverteBytesToMegabytes(long bytes)
-        {
-            return (bytes / 1024f) / 1024f;
-        }
-
-        #endregion
 
     }
 }

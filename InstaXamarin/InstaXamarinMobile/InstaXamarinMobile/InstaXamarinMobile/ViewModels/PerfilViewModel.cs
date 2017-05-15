@@ -173,26 +173,17 @@ namespace InstaXamarinMobile.ViewModels
 
 
 
-
         //Trocar Foto
-        public async Task TrocarFoto()
+        public async Task TrocarFoto(byte[] FotoNova)
         {
             try
             {
-                if (FotoNova)
+                //Atualiza na API
+                using (APIHelper API = new APIHelper())
                 {
-                    //ATUALIZA
-                    ImagemByteArray = DependencyService.Get<IAjusteImagem>().Cortar(ImagemByteArray, 200, 200);
-
-                    //Atualiza na API
-                    using (APIHelper API = new APIHelper())
-                    {
-                        //Passar Dados 
-                        USUARIO.FotoURL = await API.PUT<String>("api/usuario/foto", ImagemByteArray);
-                        App.UsuarioLogado.FotoURL = USUARIO.FotoURL;
-                    }
-
-                    FotoNova = false;
+                    //Passar Dados 
+                    USUARIO.FotoURL = await API.PUT<String>("api/usuario/foto", FotoNova);
+                    App.UsuarioLogado.FotoURL = USUARIO.FotoURL;
                 }
             }
             catch (HTTPException EX)
@@ -202,92 +193,6 @@ namespace InstaXamarinMobile.ViewModels
             {
             }
         }
-
-
-        ImageSource Imagem;
-        byte[] ImagemByteArray;
-        bool FotoNova;
-
-        public async Task TirarFoto()
-        {
-            ConfigurarMedia();
-
-            await _mediaPicker.TakePhotoAsync(new CameraMediaStorageOptions { DefaultCamera = CameraDevice.Rear, MaxPixelDimension = 200 })
-            .ContinueWith(t =>
-            {
-                if (!t.IsFaulted && !t.IsCanceled)
-                {
-                    var mediaFile = t.Result;
-
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        mediaFile.Source.CopyTo(ms);
-
-                        ms.Position = 0;
-                        ImagemByteArray = ms.ToArray();
-                    }
-
-                    Imagem = ImageSource.FromStream(() => mediaFile.Source);
-
-                    FotoNova = true;
-                }
-            }, _scheduler);
-        }
-
-        public async Task BuscarFoto()
-        {
-            ConfigurarMedia();
-
-            try
-            {
-                await _mediaPicker.SelectPhotoAsync(new CameraMediaStorageOptions { MaxPixelDimension = 200 })
-                .ContinueWith(t =>
-                {
-                    if (!t.IsFaulted && !t.IsCanceled)
-                    {
-                        var mediaFile = t.Result;
-
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            mediaFile.Source.CopyTo(ms);
-                            ImagemByteArray = ms.ToArray();
-                        }
-
-                        Imagem = ImageSource.FromStream(() => mediaFile.Source);
-
-                        FotoNova = true;
-                    }
-                });
-            }
-            catch (System.Exception ex)
-            {
-            }
-        }
-
-
-        #region MEDIA
-
-        private void ConfigurarMedia()
-        {
-            if (_mediaPicker != null)
-                return;
-
-            var device = Resolver.Resolve<IDevice>();
-
-            _mediaPicker = DependencyService.Get<IMediaPicker>() ?? device.MediaPicker;
-        }
-
-        private readonly TaskScheduler _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-
-        private IMediaPicker _mediaPicker;
-
-        private static double ConverteBytesToMegabytes(long bytes)
-        {
-            return (bytes / 1024f) / 1024f;
-        }
-
-        #endregion
-
 
     }
 }

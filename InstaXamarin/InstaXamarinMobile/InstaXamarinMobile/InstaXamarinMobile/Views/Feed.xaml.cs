@@ -18,6 +18,9 @@ namespace InstaXamarinMobile.Views
         {
             InitializeComponent();
 
+            if (Device.OS == TargetPlatform.iOS)
+                Title = "Feed";
+
             FVM = new FeedViewModel();
             BindingContext = FVM;
 
@@ -68,7 +71,7 @@ namespace InstaXamarinMobile.Views
 
         private async void Posts_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
-            if (((Post)e.Item) == FVM.POSTS.Last())
+            if (((Post)e.Item) == FVM.POSTS.Last() && !Posts.IsRefreshing)
             {
                 if (!FVM.SemMaisDados)
                 {
