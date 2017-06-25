@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" package="br.com.comocriaraplicativos.instaxamarin" android:versionCode="1" android:versionName="1">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" package="br.com.comocriaraplicativos.instaxamarin" android:versionCode="1" android:versionName="1.0">
 	<uses-sdk android:minSdkVersion="15" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.CAMERA" />
-	<application android:label="InstaXamarinMobile.Droid">
-		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBuWzgaVEospRVp_ZelsWl3eQGI_d-dvuo" />
+	<application android:label="InstaXamarin" android:icon="@drawable/icon">
+		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBQcMXp9dNyXMN8jtYikH3y7yvh4bPFT18" />
 	</application>
 </manifest>

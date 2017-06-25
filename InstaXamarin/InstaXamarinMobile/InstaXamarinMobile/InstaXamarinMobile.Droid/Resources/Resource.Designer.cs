@@ -4330,11 +4330,11 @@ namespace InstaXamarinMobile.Droid
 			// aapt resource value: 0x7f020121
 			public const int notification_icon_background = 2130837793;
 			
-			// aapt resource value: 0x7f020125
-			public const int notification_template_icon_bg = 2130837797;
-			
 			// aapt resource value: 0x7f020126
-			public const int notification_template_icon_low_bg = 2130837798;
+			public const int notification_template_icon_bg = 2130837798;
+			
+			// aapt resource value: 0x7f020127
+			public const int notification_template_icon_low_bg = 2130837799;
 			
 			// aapt resource value: 0x7f020122
 			public const int notification_tile_bg = 2130837794;
@@ -4344,6 +4344,9 @@ namespace InstaXamarinMobile.Droid
 			
 			// aapt resource value: 0x7f020124
 			public const int PinoFoto = 2130837796;
+			
+			// aapt resource value: 0x7f020125
+			public const int splash_screen = 2130837797;
 			
 			static Drawable()
 			{
@@ -6045,6 +6048,9 @@ namespace InstaXamarinMobile.Droid
 			
 			// aapt resource value: 0x7f0a018e
 			public const int MainTheme_Base = 2131362190;
+			
+			// aapt resource value: 0x7f0a0190
+			public const int MyTheme_Splash = 2131362192;
 			
 			// aapt resource value: 0x7f0a0031
 			public const int Platform_AppCompat = 2131361841;
