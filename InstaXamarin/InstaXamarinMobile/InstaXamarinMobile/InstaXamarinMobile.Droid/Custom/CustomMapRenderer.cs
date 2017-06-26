@@ -52,9 +52,53 @@ namespace InstaXamarinMobile.Droid
         public void OnMapReady(GoogleMap googleMap)
         {
             map = googleMap;
+
+			//map.Clear();
+
+
             map.InfoWindowClick += OnInfoWindowClick;
             map.SetInfoWindowAdapter(this);
+
+
+
+
+
+            InvokeOnMapReadyBaseClassHack(googleMap);
         }
+
+		private void InvokeOnMapReadyBaseClassHack(GoogleMap googleMap)
+		{
+			System.Reflection.MethodInfo onMapReadyMethodInfo = null;
+
+			Type baseType = typeof(MapRenderer);
+			foreach (var currentMethod in baseType.GetMethods(System.Reflection.BindingFlags.NonPublic |
+																System.Reflection.BindingFlags.Instance |
+																System.Reflection.BindingFlags.DeclaredOnly))
+			{
+
+				if (currentMethod.IsFinal && currentMethod.IsPrivate)
+				{
+					if (string.Equals(currentMethod.Name, "OnMapReady", StringComparison.Ordinal))
+					{
+						onMapReadyMethodInfo = currentMethod;
+
+						break;
+					}
+
+					if (currentMethod.Name.EndsWith(".OnMapReady", StringComparison.Ordinal))
+					{
+						onMapReadyMethodInfo = currentMethod;
+
+						break;
+					}
+				}
+			}
+
+			if (onMapReadyMethodInfo != null)
+			{
+				onMapReadyMethodInfo.Invoke(this, new[] { googleMap });
+			}
+		}
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
