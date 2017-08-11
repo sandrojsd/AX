@@ -6,7 +6,7 @@
              x:Class="InstaXamarinMobile.Views.Home">
 
   <iconize:IconTabbedPage.Children>
-    <local:Views.Feed Icon="fa-rss" />
+    <local:Views.Feed Icon="fa-rss" x:Name="FeedTab"  />
     <local:Views.Mapa Icon="fa-map"/>
     <local:Views.Postagem Icon="fa-camera"/>
     <local:Views.Busca Icon="fa-search" />

@@ -97,5 +97,11 @@ namespace InstaXamarinMobile.Views
                 Navigation.PushAsync(new PostDetalhado(PostSelecionado));
             }
         }
+
+        public async void AbrePost(int Post)
+        {
+            Post P = await FVM.GetPost(Post);
+            await Navigation.PushAsync(new PostDetalhado(P));
+        }
     }
 }

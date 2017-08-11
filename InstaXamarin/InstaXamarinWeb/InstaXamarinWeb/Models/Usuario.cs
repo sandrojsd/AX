@@ -45,15 +45,15 @@ namespace InstaXamarinWeb.Models
         {
             get
             {
-                if (FotoDataAtualizacao != null && FotoDataAtualizacao != DateTime.MinValue)
-                    return FotoDataAtualizacao.ToString("ddMMyyyyHHmmss");
+                if (FotoDataAtualizacao != null && FotoDataAtualizacao.Value != DateTime.MinValue)
+                    return FotoDataAtualizacao.Value.ToString("ddMMyyyyHHmmss");
                 else
                     return "1";
             }
         }
 
         [JsonIgnore]
-        public DateTime FotoDataAtualizacao { get; set; }
+        public DateTime? FotoDataAtualizacao { get; set; }
 
         public int QuantidadePosts { get; set; }
         public int QuantidadeSeguindo { get; set; }

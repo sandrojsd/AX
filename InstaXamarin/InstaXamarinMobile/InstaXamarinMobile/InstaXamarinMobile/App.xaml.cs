@@ -25,6 +25,11 @@ namespace InstaXamarinMobile
             get { return App.PreferenceGet<String>("PushToken"); }
             set { App.PreferenceAdd("PushToken", value); }
         }
+        public bool PushTokenGravado
+        {
+            get { return App.PreferenceGet<bool>("PushTokenGravado"); }
+            set { App.PreferenceAdd("PushTokenGravado", value); }
+        }
         public static Usuario UsuarioLogado
         {
             get { return App.PreferenceGet<Usuario>("UsuarioLogado"); }
@@ -59,13 +64,17 @@ namespace InstaXamarinMobile
             AlturaTela = Resolver.Resolve<IDevice>().Display.Height;
 
             if (Logado)
+            {
                 MainPage = new NavigationPage(new Views.Home());
+                GravaToken();
+            }
             else
                 MainPage = new Views.Login();
 
             MessagingCenter.Subscribe<object>(this, "Logado", (sender) =>
             {
                 MainPage = new NavigationPage(new Views.Home());
+                PushNotification.Plugin.CrossPushNotification.Current.Register();
             });
 
             MessagingCenter.Subscribe<object>(this, "Logoff", async (sender) =>
@@ -85,11 +94,23 @@ namespace InstaXamarinMobile
 
                 MainPage = new Views.Login();
             });
+
+            MessagingCenter.Subscribe<object, String>(this, "PushTokenAtualizado", (sender, token) =>
+            {
+                if (PushToken != token)
+                {
+                    PushTokenGravado = false;
+                    PushToken = token;
+                    GravaToken();
+                }
+            });
         }
 
+        public bool ATIVO = false;
 
         protected override void OnStart()
         {
+            ATIVO = true;
             // Handle when your app starts
             ColetaLocalizacao();
         }
@@ -97,12 +118,36 @@ namespace InstaXamarinMobile
         protected override void OnSleep()
         {
             // Handle when your app sleeps
+            ATIVO = false;
         }
 
         protected override void OnResume()
         {
+            ATIVO = true;
             // Handle when your app resumes
             ColetaLocalizacao();
+        }
+
+
+        async void GravaToken()
+        {
+            if (String.IsNullOrEmpty(PushToken) || PushTokenGravado || !Logado)
+                return;
+
+            try
+            {
+                using (APIHelper API = new APIHelper())
+                {
+                    await API.PUT("api/usuario/add_token_push", new { Token = PushToken, Plataforma = (Device.RuntimePlatform == Device.Android ? 0 : 1) });
+                    PushTokenGravado = true;
+                }
+            }
+            catch (HTTPException EX)
+            {
+            }
+            catch (Exception EX)
+            {
+            }
         }
 
 

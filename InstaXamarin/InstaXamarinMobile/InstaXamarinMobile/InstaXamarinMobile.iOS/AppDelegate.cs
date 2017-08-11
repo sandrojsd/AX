@@ -8,6 +8,8 @@ using XLabs.Ioc;
 using XLabs.Platform.Device;
 using XLabs.Platform.Services.Geolocation;
 using ImageCircle.Forms.Plugin.iOS;
+using InstaXamarinMobile.Helpers;
+using PushNotification.Plugin;
 
 namespace InstaXamarinMobile.iOS
 {
@@ -47,10 +49,55 @@ namespace InstaXamarinMobile.iOS
 
             LoadApplication(new App());
 
+            CrossPushNotification.Initialize<CrossPushNotificationListener>();
+
+            UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
+
             //LoadApplication(UXDivers.Gorilla.iOS.Player.CreateApplication(
             //    new UXDivers.Gorilla.Config("Gorilla on WelitonDesktop")));
 
             return base.FinishedLaunching(app, options);
+        }
+
+
+        public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
+        {
+            if (CrossPushNotification.Current is IPushNotificationHandler)
+            {
+                ((IPushNotificationHandler)CrossPushNotification.Current).OnErrorReceived(error);
+            }
+        }
+
+        public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
+        {
+            if (CrossPushNotification.Current is IPushNotificationHandler)
+            {
+                ((IPushNotificationHandler)CrossPushNotification.Current).OnRegisteredSuccess(deviceToken);
+            }
+        }
+
+        public override void DidRegisterUserNotificationSettings(UIApplication application, UIUserNotificationSettings notificationSettings)
+        {
+            application.RegisterForRemoteNotifications();
+        }
+
+        /* Uncomment if using remote background notifications. To support this background mode, enable the Remote notifications option from the Background modes section of iOS project properties. (You can also enable this support by including the UIBackgroundModes key with the remote-notification value in your app�s Info.plist file.)
+        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
+        {
+			if (CrossPushNotification.Current is IPushNotificationHandler) 
+			{
+				((IPushNotificationHandler)CrossPushNotification.Current).OnMessageReceived(userInfo);
+			}
+        }
+        */
+
+        public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
+        {
+            if (CrossPushNotification.Current is IPushNotificationHandler)
+            {
+                ((IPushNotificationHandler)CrossPushNotification.Current).OnMessageReceived(userInfo);
+                UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
+            }
         }
     }
 }

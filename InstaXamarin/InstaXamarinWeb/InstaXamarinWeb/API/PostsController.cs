@@ -107,6 +107,30 @@ namespace InstaXamarinWeb.API
             return Ok(POSTS);
         }
 
+
+        //Detalhe do post - usado em notificações 
+        [APIAutorizacao]
+        [Route("api/posts/{id}")]
+        [HttpGet]
+        public IHttpActionResult GetPost(int id)
+        {
+            int UsuariloLogado = Util.Utilitarios.GetTokenUsuarioLogado(Request);
+            Post P = db.Posts.Find(id);
+
+            P.AtualizaDadosFoto(Utilitarios.GetLarguraTela(Request));
+
+            P.Meu = P.UsuarioId == UsuariloLogado;
+            P.EuCurti = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.Curtida && pp.UsuarioId == UsuariloLogado);
+            P.EuComentei = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.Comentario && pp.UsuarioId == UsuariloLogado);
+
+            if (!P.Meu)
+            {
+                P.EuDenunciei = db.PostsInteracoes.Any(pp => pp.PostId == P.Id && pp.Tipo == PostInteracao.TipoInteracao.DenunciaPost && pp.UsuarioId == UsuariloLogado);
+            }
+
+            return Ok(P);
+        }
+
         //Get Foto
         [Route("api/posts/{PostID}/foto/{LarguraTela}")]
         [HttpGet]
@@ -199,6 +223,24 @@ namespace InstaXamarinWeb.API
 
                     db.PostsInteracoes.Add(POST_INTERACAO);
                     POST.QuantidadeCurtidas++;
+
+
+                    //push
+                    Usuario UsuarioLogado = db.Usuarios.Find(UsuarioId);
+                    List<UsuarioToken> Tokens = db.UsuarioTokens.Where(tt => tt.UsuarioId == POST.UsuarioId).ToList();
+                    foreach (var T in Tokens)
+                    {
+                        switch (T.Plataforma)
+                        {
+                            case UsuarioToken.Plataformas.Android:
+                                Utilitarios.EnviaNotificacaoAndroid("Curtida", UsuarioLogado.Nome + " curtiu sua postagem.", PostID, T.Token);
+                                break;
+                            case UsuarioToken.Plataformas.iOS:
+                                Utilitarios.EnviaNotificacaoIOS("Curtida", UsuarioLogado.Nome + " curtiu sua postagem.", PostID, T.Token);
+                                break;
+                        }
+                    }
+
                 }
             }
             else
@@ -251,6 +293,25 @@ namespace InstaXamarinWeb.API
             POST.QuantidadeComentarios++;
 
             db.SaveChanges();
+
+            //push
+            Usuario UsuarioLogado = db.Usuarios.Find(POST_INTERACAO.UsuarioId);
+            List<UsuarioToken> Tokens = db.UsuarioTokens.Where(tt => tt.UsuarioId == POST.UsuarioId).ToList();
+            String TextoDaNotificacao = Texto;
+            if (TextoDaNotificacao.Length > 30)
+                TextoDaNotificacao = TextoDaNotificacao.Substring(0, 30);
+            foreach (var T in Tokens)
+            {
+                switch (T.Plataforma)
+                {
+                    case UsuarioToken.Plataformas.Android:
+                        Utilitarios.EnviaNotificacaoAndroid("Comentário", UsuarioLogado.Nome + " comentou: " + TextoDaNotificacao, PostID, T.Token);
+                        break;
+                    case UsuarioToken.Plataformas.iOS:
+                        Utilitarios.EnviaNotificacaoIOS("Comentário", UsuarioLogado.Nome + " comentou: " + TextoDaNotificacao, PostID, T.Token);
+                        break;
+                }
+            }
 
             return Ok();
         }

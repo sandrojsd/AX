@@ -93,5 +93,26 @@ namespace InstaXamarinMobile.ViewModels
             {
             }
         }
+
+
+        public async Task<Post> GetPost(int IDPost)
+        {
+            try
+            {
+                using (APIHelper API = new APIHelper())
+                {
+                    API.HeadersRequest.Add("LarguraTela", App.LarguraTela.ToString());
+                    return await API.GET<Post>("api/posts/" + IDPost.ToString());
+                }
+            }
+            catch (HTTPException EX)
+            {
+                return null;
+            }
+            catch (Exception EX)
+            {
+                return null;
+            }
+        }
     }
 }

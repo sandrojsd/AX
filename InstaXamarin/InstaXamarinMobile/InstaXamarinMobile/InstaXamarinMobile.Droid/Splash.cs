@@ -26,7 +26,14 @@ namespace InstaXamarinMobile.Droid
         protected override void OnResume()
         {
             base.OnResume();
-            StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+
+            Intent I = new Intent(Application.Context, typeof(MainActivity));
+
+            //Passa os dados da Notificação caso exista
+            if (Intent.Extras != null)
+                I.PutExtras(Intent.Extras);
+
+            StartActivity(I);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace InstaXamarinWeb.Models
         public Plataformas Plataforma { get; set; }
 
         [Index("Pesquisa", 2)]
-        [StringLength(100)]
+        [StringLength(500)]
         public string Token { get; set; }
 
         public DateTime Data { get; set; }
